@@ -1,0 +1,55 @@
+#!/bin/sh
+
+
+function impasta {
+    local tmp
+
+    tmp="{${1// /,}}.{${2// /,}}"
+    tmp=`eval echo $tmp`
+    echo $tmp
+}
+
+function salva_se_esiste {
+    [ -r $1 ] && zip -9 $dst $1
+}
+
+function make_archive_name {
+    if [ -e VERSION ] ; then
+	if [ `wc -l < VERSION` -ne 1 ]; then
+	    echo "VERSION must have one and only one line"
+	    exit 1
+	fi
+
+	local version=`head -1 VERSION | awk '{print $1}'`
+	echo "$1-$version.zip"
+    else
+	echo "$1.zip"
+    fi
+}
+
+dst=`make_archive_name fakedsk`
+
+
+misti="crea-archivio Makefile"
+doc="README.it.fakedsk2 README.en.fakedsk2 fakedsk-doc.pdf"
+
+sorgenti="fakedsk waveio sampleio semafori"
+src_ext="c h"
+
+
+sorgenti=`impasta "$sorgenti" "$src_ext"`
+
+for i in $misti $sorgenti $doc ; do
+    salva_se_esiste $i
+done
+
+zip -9 $dst test
+
+for i in {input,filtrato}.{txt,wav} ; do
+    salva_se_esiste  test/$i
+done
+
+zip -9 $dst test/fakedsk-test.c
+zip -9 $dst test/compila
+
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+CC=gcc
+FILES="../fakedsk.c ../waveio.c ../sampleio.c ../semafori.c"
+
+$CC -ggdb -Wall -DFAKEDSK_SLOW=0.1 -o fakedsk-test -I.. fakedsk-test.c $FILES -lm
+

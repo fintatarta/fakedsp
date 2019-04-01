@@ -1,0 +1,134 @@
+Oh cos'e`?!?
+============
+
+   Un "pacchetto" per simulare la DSK.
+
+Cosa contiene?
+=============
+
+   fakedsk2-README      Questo file 
+
+   fakedsk.h            Funzioni per simulare
+   fakedsk.c            la scheda a DSP
+
+   waveio.h             Funzioni usate da fakedsk.c
+   waveio.c             per leggere/scrivere file WAV.
+
+   sampleio.c           Funzioni per leggere/scrivere 
+   sampleio.h           file di campioni (si appoggai su waveio)
+
+   semafori.c           
+   semafori.h           
+
+   test                 Una directory con alcuni file di test
+
+      test/fakedsk-test.c  Main di test
+      test/compila         Script per compilare fakedsk-test
+      
+      test/input.wav       Input di prova in formato WAV
+      test/filtrato.wav    Versione filtrata di input.wav
+      
+      test/input.txt       Input di prova in formato testo
+      test/filtrato.txt    Versione filtrata di input.txt
+
+
+Come lo uso?
+============
+
+   1) Includi nel tuo programma "fasedsk.h" usando la direttiva #include
+
+   2) Linka fakedsk.c, waveio.c, sampleio.c e semafori.c col resto 
+      del tuo programma 
+
+   3) L'eseguibile finale leggera` il file "input.wav" e scrivera`
+      sul file "output.wav".  
+
+   Il file input.wav deve avere 1 solo canale e 16 bit/campione.  Il
+   file di uscita avra` 1 canale, 16 bit/campione e la stessa
+   frequenza di campionamento del file di ingresso.
+ 
+   In alternativa, onde evitare di ricompilare tutte le volte i sorgenti 
+   di fakedsk, puoi creare una libreria libfakedsk.a con il comando
+
+            make lib
+
+   e link-are la libreria al tuo programma tramite l'opzione -lfakedsk
+
+E se volessi cambiare i nomi dei file?
+=====================================
+
+   Perche' vorresti fare una cosa del genere?  In ogni caso, e`
+   sufficiente che tu definisca le macro FAKEDSK_INPUT e
+   FAKEDSK_OUTPUT prima di includere fakedsk.h; per esempio
+
+       #define FAKEDSK_INPUT   "ingresso.wav"
+       #define FAKEDSK_OUTPUT  "uscita.wav"
+       #include "fakedsk.h"
+   
+
+Ma fare il debug con i WAV e` scomodo...
+========================================
+
+   Dalla versione 1.1 c'e` una novita`: se il nome del file ha
+   estensione "txt" o "TXT", la libreria suppone che il file sia in
+   formato testo con un campione (intero a 16 bit) per linea.  
+
+Nomi di file speciali
+=====================
+
+   Dalla versione 2.1 alcuni nomi vengono interpretati in maniera
+   speciale (questa feature e` ancora in versione beta):
+
+     * Se il nome inizia con '$', il nome del file viene letto da una
+       variabile di ambiente.  Per esempio, se la variabile INGRESSO
+       contiene "brano.wav" definendo
+
+           #define FAKEDSK_INPUT "$INGRESSO"
+
+       la libreria leggera` i campioni da brano.wav
+
+     * Se il nome inizia con '|' i dati vengono letti da/scritti su
+       una "pipe" collegata al comando che segue la '|'.  Per esempio,
+       definendo 
+
+           #define FAKEDSK_OUTPUT "| more"
+
+       i campioni in uscita saranno visualizzati tramite il comando
+       "more".  Quando l'uscita e` una "pipe", l'ingresso/uscita e`
+       sempre  in formato testo (interi a 16 bit, un valore per
+       linea). 
+
+Sono possibili altre "personalizzazioni"?
+=========================================
+
+   Si`, fakedsk e` abbastanza flessibile e puo` venir configurato
+   definendo opportune macro prima di #include-re fakedsk.h. Le macro
+   riconosciute sono
+
+       Macro                     default         descrizione
+
+     FAKEDSK_INPUT             "input.wav"        Vedi sopra
+     FAKEDSK_OUTPUT            "output.wav"       Vedi sopra
+
+     FAKEDSK_INPUT_CALLBACK     c_int11       
+                    
+     FAKEDSK_OUTPUT_CALLBACK    c_int12     Vedi sopra
+
+
+   
+Che differenza c'e` tra la versione 2.0 e le 1.*?
+=================================================
+
+Nelle versioni 1.* le routine di interrupt vengono chiamate
+"artificialmente" dall'interno della funzione comm_intr() che in
+realta` non ritorna piu` al main.  Questo impedisce di simulare
+programmi il cui main non e` un semplice ciclo "idle" tipo
+'while(1){}'.
+
+Nella versione 2.0 usa un meccanismo completamente diverso: la
+funzione comm_intr() ritorna al main() e gli interrupt vengono
+simulati mediante l'uso di segnali.  In questo modo e` possibile
+avere un main di tipo più generale. 
+simulare anche programmi il cui main non e` vuoto.
+
+

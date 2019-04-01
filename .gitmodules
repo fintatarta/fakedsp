@@ -1,0 +1,3 @@
+[submodule "Ada/src/wavefiles"]
+	path = Ada/src/wavefiles
+	url = https://github.com/gusthoff/wavefiles.git
