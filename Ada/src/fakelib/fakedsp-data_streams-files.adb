@@ -7,6 +7,7 @@ with Fakedsp.Data_Streams.Wave;
 package body Fakedsp.Data_Streams.Files is
 
    type File_Type is (Wav, Text, Unknown);
+
    subtype Known_Types is
      File_Type
    range
