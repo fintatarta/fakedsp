@@ -1,6 +1,6 @@
 pragma Ada_2012;
-with Fakedsp.Card.Protected_Buffers;
-with Fakedsp.Card.Background_Tasks;
+with Fakedsp.Protected_Buffers;
+with Fakedsp.Background_Tasks;
 
 package body Fakedsp.Card is
 

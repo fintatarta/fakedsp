@@ -40,11 +40,11 @@ begin
         New_Filter (F0 => Normalized_Frequency (Float (F0) / Float (Src.Sampling_Frequency)),
                     R  => R);
    begin
-      Card.Start (Callback        => Card.Callback_Handler_Access (Filter),
+      Card.Start (Callback        => Callback_Handler_Access (Filter),
                   Input           => Src,
                   Output          => Dst);
 
-      Card.Wait_For (Card.End_Of_Data);
+      Card.Wait_For (End_Of_Data);
    end;
 
    Src.Close;

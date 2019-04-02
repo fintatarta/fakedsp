@@ -1,5 +1,5 @@
 pragma Ada_2012;
-package body Fakedsp.Card.Background_Tasks is
+package body Fakedsp.Background_Tasks is
 
 
    -------------
@@ -131,4 +131,4 @@ package body Fakedsp.Card.Background_Tasks is
       end;
    end Adc_Dac;
 
-end Fakedsp.Card.Background_Tasks;
+end Fakedsp.Background_Tasks;

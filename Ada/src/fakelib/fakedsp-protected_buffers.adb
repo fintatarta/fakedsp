@@ -1,5 +1,5 @@
 pragma Ada_2012;
-package body Fakedsp.Card.Protected_Buffers is
+package body Fakedsp.Protected_Buffers is
 
    ------------------
    -- State_Buffer --
@@ -56,4 +56,4 @@ package body Fakedsp.Card.Protected_Buffers is
 
 
 
-end Fakedsp.Card.Protected_Buffers;
+end Fakedsp.Protected_Buffers;

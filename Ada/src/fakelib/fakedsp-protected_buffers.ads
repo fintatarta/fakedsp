@@ -1,4 +1,6 @@
-private package Fakedsp.Card.Protected_Buffers is
+
+private package Fakedsp.Protected_Buffers is
+
    ------------------
    -- State_Buffer --
    ------------------
@@ -33,4 +35,4 @@ private package Fakedsp.Card.Protected_Buffers is
 
    type Sample_Buffer_Access is access Sample_Buffer;
 
-end Fakedsp.Card.Protected_Buffers;
+end Fakedsp.Protected_Buffers;
