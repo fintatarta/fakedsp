@@ -5,8 +5,8 @@ package Fakedsp.Card is
 
    procedure Write_Dac (Data : Sample_Array);
 
-
    type State_Type is (Sleeping, Running, End_Of_Data);
+
    procedure Wait_For (State : State_Type);
 
 
@@ -14,8 +14,8 @@ package Fakedsp.Card is
    type New_Sample_Callback is access procedure;
 
    procedure Start (Callback        : New_Sample_Callback;
-                    Input           : Data_Streams.Data_Source'Class;
-                    Output          : Data_Streams.Data_Destination'Class;
+                    Input           : Data_Streams.Data_Source_Access;
+                    Output          : Data_Streams.Data_destination_Access;
                     Sampling_Freq   : Frequency_Hz := Default_Frequency;
                     In_Buffer_Size  : Positive := 1;
                     Out_Buffer_Size : Positive := 1);
