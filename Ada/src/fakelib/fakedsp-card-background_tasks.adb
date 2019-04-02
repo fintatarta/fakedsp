@@ -69,13 +69,13 @@ package body Fakedsp.Card.Background_Tasks is
       Shared_Out_Buffer : Protected_Buffers.Sample_Buffer_Access;
 
       Sampling_Period : Duration;
-      User_Callbcak   : New_Sample_Callback;
+      User_Callbcak   : Callback_Handler_Access;
    begin
       accept Go  (Buf_In        : Protected_Buffers.Sample_Buffer_Access;
                   Buf_Out       : Protected_Buffers.Sample_Buffer_Access;
                   Input         : Data_Streams.Data_Source_Access;
                   Output        : Data_Streams.Data_Destination_Access;
-                  Handler       : New_Sample_Callback)
+                  Handler       : Callback_Handler_Access)
       do
          Shared_In_Buffer := Buf_In;
          Shared_Out_Buffer := Buf_Out;
@@ -112,7 +112,7 @@ package body Fakedsp.Card.Background_Tasks is
 
                In_Cursor := In_Buffer'First;
 
-               User_Callbcak.all;
+               User_Callbcak.Sample_Ready;
             else
                In_Cursor := In_Cursor + 1;
             end if;

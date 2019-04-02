@@ -49,7 +49,7 @@ package body Fakedsp.Card is
    -----------
 
    procedure Start
-     (Callback        : New_Sample_Callback;
+     (Callback        : Callback_Handler_Access;
       Input           : Data_Streams.Data_Source_Access;
       Output          : Data_Streams.Data_Destination_Access;
       In_Buffer_Size  : Positive := 1;

@@ -7,7 +7,7 @@ private package Fakedsp.Card.Background_Tasks is
                  Buf_Out       : Protected_Buffers.Sample_Buffer_Access;
                  Input         : Data_Streams.Data_Source_Access;
                  Output        : Data_Streams.Data_Destination_Access;
-                 Handler       : New_Sample_Callback);
+                 Handler       : Callback_Handler_Access);
    end Adc_Dac;
 
    Adc_State : Protected_Buffers.State_Buffer;

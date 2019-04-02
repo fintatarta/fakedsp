@@ -9,11 +9,14 @@ package Fakedsp.Card is
 
    procedure Wait_For (State : State_Type);
 
+   type Callback_Handler is interface;
 
+   procedure Sample_Ready (H : in out Callback_Handler)
+   is abstract;
 
-   type New_Sample_Callback is access procedure;
+   type Callback_Handler_Access is access all Callback_Handler'Class;
 
-   procedure Start (Callback        : New_Sample_Callback;
+   procedure Start (Callback        : Callback_Handler_Access;
                     Input           : Data_Streams.Data_Source_Access;
                     Output          : Data_Streams.Data_destination_Access;
                     In_Buffer_Size  : Positive := 1;
