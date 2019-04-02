@@ -1,4 +1,3 @@
-with "src/wavefiles/wavefiles.gpr";
 
 project Fakedsp is
 
