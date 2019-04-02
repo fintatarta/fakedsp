@@ -75,12 +75,11 @@ package body Fakedsp.Card.Background_Tasks is
                   Buf_Out       : Protected_Buffers.Sample_Buffer_Access;
                   Input         : Data_Streams.Data_Source_Access;
                   Output        : Data_Streams.Data_Destination_Access;
-                  Sampling_Freq : Frequency_Hz;
                   Handler       : New_Sample_Callback)
       do
          Shared_In_Buffer := Buf_In;
          Shared_Out_Buffer := Buf_Out;
-         Sampling_Period := Duration (1.0 / Sampling_Freq);
+         Sampling_Period := Duration (1.0 / Input.Sampling_Frequency);
 
          User_Callbcak := Handler;
 

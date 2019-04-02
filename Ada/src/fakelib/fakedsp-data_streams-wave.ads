@@ -4,8 +4,9 @@ use Ada;
 
 package Fakedsp.Data_Streams.Wave is
    type Wave_Source is  limited new Data_Source with private;
+   type Wave_Source_Access is access Wave_Source;
 
-   function Open (Filename : String) return Wave_Source;
+   function Open (Filename : String) return Wave_Source_Access;
 
    procedure Read (Src           : Wave_Source;
                    Sample        : out Sample_Type;
@@ -21,21 +22,19 @@ package Fakedsp.Data_Streams.Wave is
    procedure Close (src : in out Wave_Source);
 
    type Wave_Destination is limited new Data_Destination with private;
+   type Wave_Destination_Access is access Wave_Destination;
 
    function Open (Filename     : String;
                   Sampling     : Frequency_Hz;
                   Last_Channel : Channel_Index := 1)
-                  return Wave_Destination;
+                  return Wave_Destination_Access;
 
    procedure Write (Dst     : Wave_Destination;
                     Sample  : Sample_Type;
                     Channel : Channel_Index := Channel_Index'First);
 
-<<<<<<< HEAD
    procedure Close (Dst : in out Wave_Destination);
 
-=======
->>>>>>> a871a7222516f7304583f643954c39e34c717fae
    function Max_Channel (Src : Wave_Destination) return Channel_Index;
 
 

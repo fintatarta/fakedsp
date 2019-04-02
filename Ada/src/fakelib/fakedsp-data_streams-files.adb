@@ -41,11 +41,11 @@ package body Fakedsp.Data_Streams.Files is
    -- Open --
    ----------
 
-   function Open (Name : String) return Data_Source'Class is
+   function Open (Name : String) return Data_Source_Access is
    begin
       case Name_To_Type (Name) is
          when Wav =>
-            return Wave.Open (Name);
+            return Data_Source_Access (Wave.Open (Name));
 
          when Text =>
             raise Constraint_Error with  "Text format unimplemented";
@@ -60,15 +60,15 @@ package body Fakedsp.Data_Streams.Files is
    -- Open --
    ----------
 
-   function Open (Name         : String;
-                  Sampling     : Frequency_Hz;
+   function Open (Name : String;
+                  Sampling : Frequency_Hz;
                   Last_Channel : Channel_Index := 1)
-                  return Data_Destination'Class
+                  return Data_destination_Access
    is
    begin
       case Name_To_Type (Name) is
          when Wav =>
-            return Wave.Open (Name, Sampling, Last_Channel);
+            return Data_Destination_Access (Wave.Open (Name, Sampling, Last_Channel));
 
          when Text =>
             raise Constraint_Error with  "Text format unimplemented";

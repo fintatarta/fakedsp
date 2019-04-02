@@ -1,11 +1,14 @@
 pragma Ada_2012;
+with Fakedsp.Card.Protected_Buffers;
+with Fakedsp.Card.Background_Tasks;
+
 package body Fakedsp.Card is
 
 
 
 
-   In_Buffer  : Sample_Buffer_Access := null;
-   Out_Buffer : Sample_Buffer_Access := null;
+   In_Buffer  : Protected_Buffers.Sample_Buffer_Access := null;
+   Out_Buffer : Protected_Buffers.Sample_Buffer_Access := null;
 
 
    --------------
@@ -34,19 +37,11 @@ package body Fakedsp.Card is
       S : State_Type;
    begin
       loop
-         State_Buffer.Get (S);
+         Background_Tasks.Adc_State.Get (S);
          exit when S = State;
       end loop;
    end Wait_For;
 
---     task Adc_Dac is
---        entry Go  (Buf_In        : Sample_Buffer_Access;
---                   Buf_Out       : Sample_Buffer_Access;
---                   Input         : Data_Streams.Data_Source_Access;
---                   Output        : Data_Streams.Data_Destination_Access;
---                   Sampling_Freq : Frequency_Hz;
---                   Handler       : New_Sample_Callback);
---     end Adc_Dac;
 
 
    -----------
@@ -57,20 +52,18 @@ package body Fakedsp.Card is
      (Callback        : New_Sample_Callback;
       Input           : Data_Streams.Data_Source_Access;
       Output          : Data_Streams.Data_Destination_Access;
-      Sampling_Freq   : Frequency_Hz := Default_Frequency;
       In_Buffer_Size  : Positive := 1;
       Out_Buffer_Size : Positive := 1)
    is
    begin
-      In_Buffer := new Sample_Buffer (In_Buffer_Size);
-      Out_Buffer := new Sample_Buffer (Out_Buffer_Size);
+      In_Buffer := new Protected_Buffers.Sample_Buffer (In_Buffer_Size);
+      Out_Buffer := new Protected_Buffers.Sample_Buffer (Out_Buffer_Size);
 
-      Adc_Dac.Go (Buf_In        => In_Buffer,
-                  Buf_Out       => Out_Buffer,
-                  Input         => Input,
-                  Output        => Output,
-                  Sampling_Freq => Sampling_Freq,
-                  Handler       => Callback);
+      Background_Tasks.Adc_Dac.Go (Buf_In        => In_Buffer,
+                                   Buf_Out       => Out_Buffer,
+                                   Input         => Input,
+                                   Output        => Output,
+                                   Handler       => Callback);
    end Start;
 
 
