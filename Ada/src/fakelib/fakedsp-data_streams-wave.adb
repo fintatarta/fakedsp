@@ -1,9 +1,15 @@
 pragma Ada_2012;
 with Utilities;
+with Ada.Text_IO; use Ada.Text_IO;
 
 package body Fakedsp.Data_Streams.Wave is
 
    subtype RIFF_Tag is String (1 .. 4);
+
+   RIFF_Name   : constant RIFF_Tag := "RIFF";
+   WAVE_Format : constant RIFF_Tag := "WAVE";
+   Fmt_Name    : constant RIFF_Tag := "fmt ";
+   Data_Name   : constant RIFF_Tag := "data";
 
    type Int32 is mod 2 ** 32 with Size => 32;
    type Int16 is mod 2 ** 16 with Size => 16;
@@ -23,7 +29,7 @@ package body Fakedsp.Data_Streams.Wave is
       record
          Tag            : RIFF_Tag;
          Chunk_Size     : Int32;
-         Audio_Format   : Int16;
+         Format         : Audio_Format;
          Num_Channels   : Int16;
          Sample_Rate    : Int32;
          Byte_Rate      : Int32;
@@ -57,16 +63,18 @@ package body Fakedsp.Data_Streams.Wave is
          declare
             Riff : constant RIFF_Chunk := Read_Riff_Chunk (Result.File);
          begin
-            if Riff.Tag /= "RIFF" or Riff.Format /= "WAVE" then
+            if Riff.Tag /= RIFF_Name or Riff.Format /= WAVE_Format then
                raise Bad_Format;
             end if;
+
+            Put_Line ("SZ=" & Riff.Chunk_Size'Img);
          end;
 
          declare
             Format : constant Format_Chunk := Read_Format_Chunk (Result.File);
          begin
-            if Format.Tag /= "fmt "then
-               raise Bad_Format;
+            if Format.Tag /= Fmt_Name then
+               raise Bad_Format with "[" & Format.Tag & "," & Fmt_Name & "]";
             end if;
 
             if Format.Bit_Per_Sample /= 16 then
@@ -78,13 +86,13 @@ package body Fakedsp.Data_Streams.Wave is
             end if;
 
             Result.Frequency := Frequency_Hz (Format.Sample_Rate);
-            Result.Top_Channel := Channel_Index (Format.Num_Channels - 1) + Channel_Index'First;
+            Result.Top_Channel := (Channel_Index (Format.Num_Channels) + Channel_Index'First)-1;
          end;
 
          declare
             Header : constant Data_Chunk_Header := Read_Data_Header (Result.File);
          begin
-            if Header.Tag /= "data" then
+            if Header.Tag /= Data_Name then
                raise Bad_Format with "Expected tag 'data'";
             end if;
          end;
@@ -124,10 +132,48 @@ package body Fakedsp.Data_Streams.Wave is
       Last_Channel : Channel_Index := 1)
       return Wave_Destination
    is
+      procedure Write_RIFF   is new Utilities.Write_Chunk (RIFF_Chunk);
+      procedure Write_Fmt    is new Utilities.Write_Chunk (Format_Chunk);
+      procedure Write_Header is new Utilities.Write_Chunk (Data_Chunk_Header);
+
+      N_Channel : constant Int32 := Int32 ((Last_Channel + 1)-Channel_Index'First);
+      Byte_Per_Sample : constant Int32 := Int32 (Sample_Size / 8);
    begin
-      --  Generated stub: replace with real body!
-      pragma Compile_Time_Warning (Standard.True, "Open unimplemented");
-      return raise Program_Error with "Unimplemented function Open";
+      if Last_Channel /= 1 then
+         raise Unimplemented_Format;
+      end if;
+
+      return Result : Wave_Destination do
+         Result.Frequency := Sampling;
+         Result.Top_Channel := Last_Channel;
+
+         Streams.Stream_IO.Create (File => Result.File,
+                                   Mode => Streams.Stream_IO.Out_File,
+                                   Name => Filename);
+
+
+         Write_RIFF
+           (Result.File,
+            RIFF_Chunk'(Tag        => RIFF_Name,
+                        Chunk_Size => 0,
+                        Format     => WAVE_Format));
+
+         Write_Fmt
+           (Result.File,
+            Format_Chunk'(Tag            => Fmt_Name,
+                          Chunk_Size     => 16,
+                          Format         => PCM,
+                          Num_Channels   => Int16 (N_Channel),
+                          Sample_Rate    => Int32 (Sampling),
+                          Byte_Rate      => Int32 (Sampling) * Byte_Per_Sample * N_Channel,
+                          Block_Align    => Int16(Byte_Per_Sample * N_Channel),
+                          Bit_Per_Sample => Int16 (Sample_Size)));
+
+         Write_Header
+           (Result.File,
+            Data_Chunk_Header'(Tag        => Data_Name,
+                               Chunk_Size => 0));
+      end return;
    end Open;
 
    -----------
@@ -139,10 +185,13 @@ package body Fakedsp.Data_Streams.Wave is
       Sample  : Sample_Type;
       Channel : Channel_Index := Channel_Index'First)
    is
+      procedure Write_Sample is new Utilities.Write_Chunk (Sample_Type);
    begin
-      --  Generated stub: replace with real body!
-      pragma Compile_Time_Warning (Standard.True, "Write unimplemented");
-      raise Program_Error with "Unimplemented procedure Write";
+      if Channel > Dst.Top_Channel then
+         raise Constraint_Error with "Channel out of bound";
+      end if;
+
+      Write_Sample (Dst.File, Sample);
    end Write;
 
    -----------
@@ -151,10 +200,19 @@ package body Fakedsp.Data_Streams.Wave is
 
    procedure Close (Dst : in out Wave_Destination)
    is
+      use Streams.Stream_IO;
+
+      Len : constant Streams.Stream_IO.Count := Size (Dst.File);
+
+      procedure Write is new Utilities.Write_Chunk (Int32);
    begin
-         --  Generated stub: replace with real body!
-      pragma Compile_Time_Warning (Standard.True, "Write unimplemented");
-      raise Program_Error with "Unimplemented procedure Write";
+         Set_Index (Dst.File, 5);
+         Write (Dst.File, Int32 (Len)-8);
+
+         Set_Index (Dst.File, 41);
+         Write (Dst.File, Int32 (Len)-44);
+
+         Close(Dst.File);
    end Close;
 
    -----------
