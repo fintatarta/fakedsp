@@ -19,7 +19,7 @@ package Fakedsp.Data_Streams.Wave is
                          return Channel_Index;
 
 
-   type Wave_Destination is new Data_Destination with private;
+   type Wave_Destination is limited new Data_Destination with private;
 
    function Open (Filename     : String;
                   Sampling     : Frequency_Hz;
@@ -29,6 +29,9 @@ package Fakedsp.Data_Streams.Wave is
    procedure Write (Dst     : Wave_Destination;
                     Sample  : Sample_Type;
                     Channel : Channel_Index := Channel_Index'First);
+
+   function Max_Channel (Src : Wave_Destination) return Channel_Index;
+
 
    Bad_Format : exception;
    Unimplemented_Format: exception;
@@ -48,6 +51,15 @@ private
    is (Src.Top_Channel);
 
 
-   type Wave_Destination is new Data_Destination with null record;
+   type Wave_Destination is limited new Data_Destination with
+      record
+         File        : Streams.Stream_IO.File_Type;
+         Top_Channel : Channel_Index;
+         Frequency   : Frequency_Hz;
+      end record;
+
+
+   function Max_Channel (Src : Wave_Destination) return Channel_Index
+   is (Src.Top_Channel);
 
 end Fakedsp.Data_Streams.Wave;

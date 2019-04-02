@@ -1,9 +1,7 @@
 pragma Ada_2012;
-with Ada.Unchecked_Conversion;
+with Utilities;
 
 package body Fakedsp.Data_Streams.Wave is
-
-   EOF : exception;
 
    subtype RIFF_Tag is String (1 .. 4);
 
@@ -39,34 +37,7 @@ package body Fakedsp.Data_Streams.Wave is
          Chunk_Size   : Int32;
       end record;
 
-   generic
-      type Chunk_Type is private;
-   function Read_Chunk (From : Streams.Stream_IO.File_Type) return Chunk_Type;
 
-   function Read_Chunk (From : Streams.Stream_IO.File_Type) return Chunk_Type
-   is
-      use Streams;
-
-      subtype Buffer_Type is
-        Stream_Element_Array (1 .. Chunk_Type'Size / Stream_Element'Size);
-
-      function Convert is
-        new Unchecked_Conversion (Source => Buffer_Type,
-                                  Target => Chunk_Type);
-
-      Buffer : Buffer_Type;
-      Last   : Stream_Element_Count;
-   begin
-      Stream_IO.Read (File => From,
-                      Item => Buffer,
-                      Last => Last);
-
-      if Last /= Buffer'Last then
-         raise EOF;
-      end if;
-
-      return Convert (Buffer);
-   end Read_Chunk;
    ----------
    -- Open --
    ----------
@@ -74,9 +45,9 @@ package body Fakedsp.Data_Streams.Wave is
    function Open (Filename : String) return Wave_Source is
       use Streams.Stream_IO;
 
-      function Read_Riff_Chunk is new Read_Chunk (RIFF_Chunk);
-      function Read_Format_Chunk is new Read_Chunk (Format_Chunk);
-      function Read_Data_Header is new Read_Chunk (Data_Chunk_Header);
+      function Read_Riff_Chunk   is new Utilities.Read_Chunk (RIFF_Chunk);
+      function Read_Format_Chunk is new Utilities.Read_Chunk (Format_Chunk);
+      function Read_Data_Header  is new Utilities.Read_Chunk (Data_Chunk_Header);
    begin
       return Result : Wave_Source do
          Open (File => Result.File,
@@ -130,7 +101,7 @@ package body Fakedsp.Data_Streams.Wave is
       End_Of_Stream : out Boolean;
       Channel       : Channel_Index := Channel_Index'First)
    is
-      function Read_Sample is new Read_Chunk (Sample_Type);
+      function Read_Sample is new Utilities.Read_Chunk (Sample_Type);
    begin
       if Channel > Src.Top_Channel then
          raise Constraint_Error with "channel out of bound";
@@ -139,7 +110,7 @@ package body Fakedsp.Data_Streams.Wave is
       Sample := Read_Sample (Src.File);
       End_Of_Stream := False;
    exception
-      when EOF =>
+      when Streams.Stream_IO.End_Error =>
          End_Of_Stream := True;
    end Read;
 
