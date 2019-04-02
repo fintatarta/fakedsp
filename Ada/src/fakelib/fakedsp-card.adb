@@ -2,6 +2,8 @@ pragma Ada_2012;
 with Fakedsp.Protected_Buffers;
 with Fakedsp.Background_Tasks;
 
+with Utilities.Task_Reaper;
+
 package body Fakedsp.Card is
 
 
@@ -66,5 +68,6 @@ package body Fakedsp.Card is
                                    Handler       => Callback);
    end Start;
 
-
+begin
+   Utilities.Task_Reaper.Install_Reaper;
 end Fakedsp.Card;

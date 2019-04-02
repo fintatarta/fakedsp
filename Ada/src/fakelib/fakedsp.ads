@@ -6,7 +6,9 @@ with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 package Fakedsp is
    Sample_Size : constant Natural := 16;
 
-   type Sample_Type is mod 2 ** Sample_Size;
+   type Sample_Type is
+   range -(2 ** (Sample_Size - 1)) .. 2 ** (Sample_Size - 1)-1
+     with Size => 16;
    -- Type representing the sample read from the ADC/written to the DAC
 
    type Sample_Array is array (Natural range <>) of Sample_Type;

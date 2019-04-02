@@ -1,4 +1,5 @@
 pragma Ada_2012;
+with Ada.Text_IO; use Ada.Text_IO;
 package body Fakedsp.Background_Tasks is
 
 
@@ -22,19 +23,27 @@ package body Fakedsp.Background_Tasks is
          Input    : Data_Source_Access;
          End_Of_Data : Boolean;
       begin
-         accept Read_From (Source : in Data_Source_Access) do
-            Input := Source;
-         end Read_From;
+         select
+            accept Read_From (Source : in Data_Source_Access) do
+               Input := Source;
+            end Read_From;
+         or
+            terminate;
+         end select;
 
          End_Of_Data := False;
 
          while not End_Of_Data loop
             Input.Read (Sample, End_Of_Data);
 
-            accept Get (Item : out Sample_Type; Eof : out Boolean) do
-               Item := Sample;
-               Eof := End_Of_Data;
-            end Get;
+            select
+               accept Get (Item : out Sample_Type; Eof : out Boolean) do
+                  Item := Sample;
+                  Eof := End_Of_Data;
+               end Get;
+            or
+               terminate;
+            end select;
          end loop;
       end Reader;
 
@@ -47,9 +56,13 @@ package body Fakedsp.Background_Tasks is
          Output : Data_Destination_Access;
          Sample : Sample_Type;
       begin
-         accept Write_To (Dst : in Data_Destination_Access) do
-            Output := Dst;
-         end Write_To;
+         select
+            accept Write_To (Dst : in Data_Destination_Access) do
+               Output := Dst;
+            end Write_To;
+         or
+            terminate;
+         end select;
 
          loop
             select
@@ -71,7 +84,8 @@ package body Fakedsp.Background_Tasks is
       Sampling_Period : Duration;
       User_Callbcak   : Callback_Handler_Access;
    begin
-      accept Go  (Buf_In        : Protected_Buffers.Sample_Buffer_Access;
+      select
+         accept Go  (Buf_In        : Protected_Buffers.Sample_Buffer_Access;
                   Buf_Out       : Protected_Buffers.Sample_Buffer_Access;
                   Input         : Data_Streams.Data_Source_Access;
                   Output        : Data_Streams.Data_Destination_Access;
@@ -85,8 +99,11 @@ package body Fakedsp.Background_Tasks is
 
          Reader.Read_From (Input);
          Writer.Write_To (Output);
-      end Go;
-
+         end Go;
+      or
+         terminate;
+      end select;
+      Put_Line ("T=" & Sampling_Period'Img);
       declare
          In_Buffer  : Sample_Array (1 .. Shared_In_Buffer.Length);
          Out_Buffer : Sample_Array (1 .. Shared_Out_Buffer.Length);
@@ -101,6 +118,7 @@ package body Fakedsp.Background_Tasks is
             delay Sampling_Period;
 
             Reader.Get (In_Buffer (In_Cursor), Eof);
+
 
             if Eof then
                Adc_State.Set (S => End_Of_Data);
