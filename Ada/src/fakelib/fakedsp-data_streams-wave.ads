@@ -31,8 +31,11 @@ package Fakedsp.Data_Streams.Wave is
                     Sample  : Sample_Type;
                     Channel : Channel_Index := Channel_Index'First);
 
+<<<<<<< HEAD
    procedure Close (Dst : in out Wave_Destination);
 
+=======
+>>>>>>> a871a7222516f7304583f643954c39e34c717fae
    function Max_Channel (Src : Wave_Destination) return Channel_Index;
 
 

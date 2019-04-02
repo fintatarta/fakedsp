@@ -1,6 +1,5 @@
 pragma Ada_2012;
 with Utilities;
-with Ada.Text_IO; use Ada.Text_IO;
 
 package body Fakedsp.Data_Streams.Wave is
 
@@ -66,8 +65,6 @@ package body Fakedsp.Data_Streams.Wave is
             if Riff.Tag /= RIFF_Name or Riff.Format /= WAVE_Format then
                raise Bad_Format;
             end if;
-
-            Put_Line ("SZ=" & Riff.Chunk_Size'Img);
          end;
 
          declare
