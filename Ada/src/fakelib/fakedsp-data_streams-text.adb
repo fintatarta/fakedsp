@@ -22,10 +22,15 @@ package body Fakedsp.Data_Streams.Text is
 
          procedure Parse_Line (Item           : Text_Source_Access;
                                Line           : String;
-                               Colon_Position : Natural)
+                               Colon_Position : Positive)
+           with Pre => Line (Line'First) = '#';
+
+         procedure Parse_Line (Item           : Text_Source_Access;
+                               Line           : String;
+                               Colon_Position : Positive)
          is
             Key   : constant String :=
-                      Trim (Line (Line'First .. Colon_Position - 1), Both);
+                      Trim (Line (Line'First + 1 .. Colon_Position - 1), Both);
 
             Value : constant String :=
                       Trim (Line (Colon_Position + 1 .. Line'Last), Both);
@@ -41,15 +46,17 @@ package body Fakedsp.Data_Streams.Text is
                   Item.Frequency := Frequency_Hz'Value (Value);
                else
                   Put_Line (Standard_Error,
-                            "Warning: unknown key '" & Key
-                            & " ' in '" & Line & "'");
+                            "Warning: unknown key "
+                            & "'" & Key & "'"
+                            & " in "
+                            & "'" & Line & "'");
                end if;
             end if;
 
          end Parse_Line;
 
-         function To_Be_Skipped (Line : String) return Boolean
-         is (Line'Length = 0 or else Line (Line'First) = '#');
+         --           function To_Be_Skipped (Line : String) return Boolean
+         --           is (Line'Length = 0);
 
 
       begin
@@ -60,15 +67,20 @@ package body Fakedsp.Data_Streams.Text is
                Line            : constant String := Trim (Get_Line (Item.File), Both);
                Colon_Position  : Natural;
             begin
-               if not To_Be_Skipped (Line)  then
+               Put_Line (Standard_Error, "##" & Line & "##");
+               if Line /= ""  then
+                  if Line (Line'First) /= '#' then
+                     Item.Current_Sample := Sample_Type'Value (Line);
+                     Item.Empty := False;
+                     Put_Line ("BACK");
+                     return;
+                  end if;
+
+
                   Colon_Position := Index (Source  => Line,
                                            Pattern => ":");
 
-                  if Colon_Position = 0 then
-                     Item.Current_Sample := Sample_Type'Value (Line);
-                     Item.Empty := False;
-                     return;
-                  else
+                  if Colon_Position /= 0 then
                      Parse_Line (Item, Line, Colon_Position);
                   end if;
                end if;
@@ -76,17 +88,18 @@ package body Fakedsp.Data_Streams.Text is
          end loop;
       end Parse_Header;
 
-      Result : constant Text_Source_Access := new Text_Source'(File           => <>,
-                                                      Top_Channel    => 1,
-                                                      Frequency      => 8000.0,
-                                                      Current_Sample => 0,
-                                                      Empty          => False);
+      Result : constant Text_Source_Access :=
+                 new Text_Source'(File           => <>,
+                                  Top_Channel    => 1,
+                                  Frequency      => 8000.0,
+                                  Current_Sample => 0,
+                                  Empty          => False);
 
    begin
       if Filename = Standard_IO_Name then
          Open (Result.File, Text_IO.In_File);
       else
-         Open (File => Result.file,
+         Open (File => Result.File,
                Name => Filename,
                M    => Text_IO.In_File);
       end if;
@@ -107,6 +120,7 @@ package body Fakedsp.Data_Streams.Text is
       End_Of_Stream : out Boolean;
       Channel       : Channel_Index := Channel_Index'First)
    is
+--        use Text_IO;
       pragma Unreferenced (Channel);
    begin
       -- Output sample is always set to the current sample, even if
@@ -116,11 +130,16 @@ package body Fakedsp.Data_Streams.Text is
       Sample := Src.Current_Sample;
 
       if Src.Empty then
+--           Put_Line (Standard_Error, "FINITO");
          End_Of_Stream := True;
          return;
+      else
+         End_Of_Stream := False;
       end if;
 
+
       if Hybrid_Files.End_Of_File (Src.File) then
+--           Put_Line (Standard_Error, "EOF");
          Src.Empty := True;
       else
          Src.Current_Sample := Sample_Type'Value (Hybrid_Files.Get_Line (Src.File));
@@ -163,14 +182,15 @@ package body Fakedsp.Data_Streams.Text is
       else
          Hybrid_Files.Create (File => Result.File,
                               Name => Filename,
-                              M    => Text_IO.In_File);
+                              M    => Text_IO.Out_File);
 
       end if;
 
       Hybrid_Files.Put_Line (Result.File,
-                        Sampling_Frequency_Key
-                        & ":"
-                        & Frequency_Hz'Image (Result.Frequency));
+                             "# "
+                             & Sampling_Frequency_Key
+                             & ":"
+                             & Frequency_Hz'Image (Result.Frequency));
 
       Hybrid_Files.New_Line (Result.File);
 

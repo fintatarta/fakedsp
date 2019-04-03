@@ -9,8 +9,11 @@ project Fakedsp is
    end Ide;
 
    package Compiler is
-      for Switches ("ada") use ("-gnatwa", "-gnat12");
+      for Switches ("ada") use ("-gnatwa", "-gnat12", "-gnata");
    end Compiler;
+
+   package Builder is
+   end Builder;
 
 end Fakedsp;
 

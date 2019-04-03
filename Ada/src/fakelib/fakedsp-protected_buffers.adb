@@ -1,4 +1,6 @@
 pragma Ada_2012;
+pragma Assertion_Policy (disable);
+
 package body Fakedsp.Protected_Buffers is
 
    ------------------
@@ -50,7 +52,10 @@ package body Fakedsp.Protected_Buffers is
       is (Size);
 
       function Get return Sample_Array
-      is (Buffer);
+      is
+      begin
+         return Buffer;
+      end Get;
 
    end Sample_Buffer;
 

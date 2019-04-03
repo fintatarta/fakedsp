@@ -1,6 +1,6 @@
 pragma Ada_2012;
 with Ada.Numerics.Elementary_Functions;
---  with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Text_IO; use Ada.Text_IO;
 with Fakedsp.Card;
 
 package body Notch_Filters is
@@ -42,7 +42,7 @@ package body Notch_Filters is
       Buffer := Card.Read_ADC;
       Input := Float (Buffer (1));
 
-      Output := 0.35*(X.Num0 * Input + X.Status (1));
+      Output := 0.1*(X.Num0 * Input + X.Status (1));
       X.Status (1) := Output * X.Den1 + Input * X.Num1 + X.Status (2);
       X.Status (2) := Output * X.Den2 + Input * X.Num2;
 

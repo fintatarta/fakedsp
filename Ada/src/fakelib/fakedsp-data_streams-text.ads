@@ -22,6 +22,9 @@ package Fakedsp.Data_Streams.Text is
 
    procedure Close (Src : in out Text_Source);
 
+   function Standard_Input return Text_Source_Access;
+
+
    type Text_Destination is limited new Data_Destination with private;
    type Text_Destination_Access is access Text_Destination;
 
@@ -29,6 +32,8 @@ package Fakedsp.Data_Streams.Text is
                   Sampling     : Frequency_Hz := 8000.0;
                   Last_Channel : Channel_Index := 1)
                   return Text_Destination_Access;
+
+   function Standard_Output return Text_Destination_Access;
 
    procedure Write (Dst     : Text_Destination;
                     Sample  : Sample_Type;
@@ -65,6 +70,9 @@ private
    is (Src.Top_Channel);
 
 
+   function Standard_Input return Text_Source_Access
+   is (Open (Standard_IO_Name));
+
    type Text_Destination is limited new Data_Destination with
       record
          File        : Hybrid_File;
@@ -76,4 +84,7 @@ private
    function Max_Channel (Src : Text_Destination) return Channel_Index
    is (Src.Top_Channel);
 
+
+   function Standard_Output return Text_Destination_Access
+   is (Open (Standard_IO_Name));
 end Fakedsp.Data_Streams.Text;

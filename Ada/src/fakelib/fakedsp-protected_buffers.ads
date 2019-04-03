@@ -1,3 +1,4 @@
+pragma Assertion_Policy (disable);
 
 private package Fakedsp.Protected_Buffers is
 
