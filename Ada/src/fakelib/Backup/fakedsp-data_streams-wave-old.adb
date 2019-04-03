@@ -52,9 +52,9 @@ package body Fakedsp.Data_Streams.Wave is
    is
       use Streams.Stream_IO;
 
---        function Read_Riff_Chunk   is new Utilities.Read_Chunk (RIFF_Chunk);
---        function Read_Format_Chunk is new Utilities.Read_Chunk (Format_Chunk);
---        function Read_Data_Header  is new Utilities.Read_Chunk (Data_Chunk_Header);
+      function Read_Riff_Chunk   is new Utilities.Read_Chunk (RIFF_Chunk);
+      function Read_Format_Chunk is new Utilities.Read_Chunk (Format_Chunk);
+      function Read_Data_Header  is new Utilities.Read_Chunk (Data_Chunk_Header);
 
       Result : constant Wave_Source_Access := new Wave_Source;
    begin
@@ -63,20 +63,16 @@ package body Fakedsp.Data_Streams.Wave is
             Name => Filename);
 
       declare
-         Riff : RIFF_Chunk;
+         Riff : constant RIFF_Chunk := Read_Riff_Chunk (Result.File);
       begin
-         RIFF_Chunk'Read (Stream (Result.File), Riff);
-
          if Riff.Tag /= RIFF_Name or Riff.Format /= WAVE_Format then
             raise Bad_Format;
          end if;
       end;
 
       declare
-         Format : Format_Chunk;
+         Format : constant Format_Chunk := Read_Format_Chunk (Result.File);
       begin
-         Format_Chunk'Read (Stream (Result.File), Format);
-
          if Format.Tag /= Fmt_Name then
             raise Bad_Format with "[" & Format.Tag & "," & Fmt_Name & "]";
          end if;
@@ -94,10 +90,8 @@ package body Fakedsp.Data_Streams.Wave is
       end;
 
       declare
-         Header : Data_Chunk_Header;
+         Header : constant Data_Chunk_Header := Read_Data_Header (Result.File);
       begin
-         Data_Chunk_Header'Read (Stream (Result.File), Header);
-
          if Header.Tag /= Data_Name then
             raise Bad_Format with "Expected tag 'data'";
          end if;
@@ -116,14 +110,13 @@ package body Fakedsp.Data_Streams.Wave is
       End_Of_Stream : out Boolean;
       Channel       : Channel_Index := Channel_Index'First)
    is
-
---        function Read_Sample is new Utilities.Read_Chunk (Sample_Type);
+      function Read_Sample is new Utilities.Read_Chunk (Sample_Type);
    begin
       if Channel > Src.Top_Channel then
          raise Constraint_Error with "channel out of bound";
       end if;
 
-      Sample_Type'Read (Streams.Stream_IO.Stream (Src.File), Sample);
+      Sample := Read_Sample (Src.File);
       End_Of_Stream := False;
    exception
       when Streams.Stream_IO.End_Error =>
@@ -139,10 +132,9 @@ package body Fakedsp.Data_Streams.Wave is
                   Last_Channel : Channel_Index := 1)
                   return Wave_Destination_Access
    is
---        procedure Write_RIFF   is new Utilities.Write_Chunk (RIFF_Chunk);
---        procedure Write_Fmt    is new Utilities.Write_Chunk (Format_Chunk);
---        procedure Write_Header is new Utilities.Write_Chunk (Data_Chunk_Header);
-      use Ada.Streams.Stream_IO;
+      procedure Write_RIFF   is new Utilities.Write_Chunk (RIFF_Chunk);
+      procedure Write_Fmt    is new Utilities.Write_Chunk (Format_Chunk);
+      procedure Write_Header is new Utilities.Write_Chunk (Data_Chunk_Header);
 
       N_Channel       : constant Int32 := Int32 ((Last_Channel + 1)-Channel_Index'First);
       Byte_Per_Sample : constant Int32 := Int32 (Sample_Size / 8);
@@ -163,14 +155,14 @@ package body Fakedsp.Data_Streams.Wave is
                                 Name => Filename);
 
 
-      RIFF_Chunk'Write
-        (Stream (Result.File),
+      Write_RIFF
+        (Result.File,
          RIFF_Chunk'(Tag        => RIFF_Name,
                      Chunk_Size => 0,
                      Format     => WAVE_Format));
 
-      Format_Chunk'Write
-        (Stream (Result.File),
+      Write_Fmt
+        (Result.File,
          Format_Chunk'(Tag            => Fmt_Name,
                        Chunk_Size     => 16,
                        Format         => PCM,
@@ -180,8 +172,8 @@ package body Fakedsp.Data_Streams.Wave is
                        Block_Align    => Int16 (Byte_Per_Sample * N_Channel),
                        Bit_Per_Sample => Int16 (Sample_Size)));
 
-      Data_Chunk_Header'Write
-        (Stream (Result.File),
+      Write_Header
+        (Result.File,
          Data_Chunk_Header'(Tag        => Data_Name,
                             Chunk_Size => 0));
       return Result;
@@ -196,13 +188,13 @@ package body Fakedsp.Data_Streams.Wave is
       Sample  : Sample_Type;
       Channel : Channel_Index := Channel_Index'First)
    is
---        procedure Write_Sample is new Utilities.Write_Chunk (Sample_Type);
+      procedure Write_Sample is new Utilities.Write_Chunk (Sample_Type);
    begin
       if Channel > Dst.Top_Channel then
          raise Constraint_Error with "Channel out of bound";
       end if;
 
-      Sample_Type'Write (Streams.Stream_IO.Stream (Dst.File), Sample);
+      Write_Sample (Dst.File, Sample);
    end Write;
 
    -----------
@@ -215,13 +207,13 @@ package body Fakedsp.Data_Streams.Wave is
 
       Len : constant Streams.Stream_IO.Count := Size (Dst.File);
 
---        procedure Write is new Utilities.Write_Chunk (Int32);
+      procedure Write is new Utilities.Write_Chunk (Int32);
    begin
       Set_Index (Dst.File, 5);
-      Int32'Write (Stream (Dst.File), Int32 (Len)-8);
+      Write (Dst.File, Int32 (Len)-8);
 
       Set_Index (Dst.File, 41);
-      Int32'Write (Stream (Dst.File), Int32 (Len)-44);
+      Write (Dst.File, Int32 (Len)-44);
 
       Close (Dst.File);
    end Close;

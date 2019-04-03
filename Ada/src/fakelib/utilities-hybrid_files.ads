@@ -1,4 +1,10 @@
+--
+-- It is not always easy to mix standard input/output and traditional files
+-- This package provides a type that can work transparently with both.
+-- The interface is very similar to the interface of Text_IO.
+--
 with Ada.Text_IO;
+use Ada;
 package Utilities.Hybrid_Files is
    use type Text_IO.File_Mode;
 

@@ -1,3 +1,6 @@
+--
+-- This package defines few protected objects used to communicate
+--
 pragma Assertion_Policy (disable);
 
 private package Fakedsp.Protected_Buffers is
