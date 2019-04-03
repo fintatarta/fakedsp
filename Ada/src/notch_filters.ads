@@ -1,9 +1,9 @@
-with Fakedsp;
+with Fakedsp.Card;
 
 package Notch_Filters is
    type Normalized_Frequency is digits 16 range 0.0 .. 1.0;
 
-   type Notch_Filter is new Fakedsp.Callback_Handler with private;
+   type Notch_Filter is new Fakedsp.Card.Callback_Handler with private;
 
    type Filter_Access is access Notch_Filter;
 
@@ -14,7 +14,7 @@ package Notch_Filters is
 private
    type Memory_Type is array (1 .. 2) of Float;
 
-   type Notch_Filter is new Fakedsp.Callback_Handler
+   type Notch_Filter is new Fakedsp.Card.Callback_Handler
      with
       record
          Num0, Num1, Num2 : Float;

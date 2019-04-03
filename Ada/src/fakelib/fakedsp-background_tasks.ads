@@ -1,5 +1,6 @@
 with Fakedsp.Data_Streams;
 with Fakedsp.Protected_Buffers;
+with Fakedsp.Card;
 
 private package Fakedsp.Background_Tasks is
    task Adc_Dac is
@@ -7,7 +8,7 @@ private package Fakedsp.Background_Tasks is
                  Buf_Out       : Protected_Buffers.Sample_Buffer_Access;
                  Input         : Data_Streams.Data_Source_Access;
                  Output        : Data_Streams.Data_Destination_Access;
-                 Handler       : Callback_Handler_Access);
+                 Handler       : Card.Callback_Handler_Access);
    end Adc_Dac;
 
    Adc_State : Protected_Buffers.State_Buffer;

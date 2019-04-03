@@ -3,6 +3,8 @@
 --
 pragma Assertion_Policy (disable);
 
+with Fakedsp.Card;  use Fakedsp.Card;
+
 private package Fakedsp.Protected_Buffers is
 
    ------------------
@@ -13,6 +15,7 @@ private package Fakedsp.Protected_Buffers is
 
       procedure Set (S : State_Type);
       entry Get (S : out State_Type);
+      function Peek return State_Type;
    private
       State   : State_Type := Sleeping;
       Changed : Boolean := True;

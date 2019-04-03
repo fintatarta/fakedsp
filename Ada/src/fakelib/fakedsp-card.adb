@@ -22,6 +22,16 @@ package body Fakedsp.Card is
       return In_Buffer.Get;
    end Read_ADC;
 
+   --------------
+   -- Read_ADC --
+   --------------
+
+   function Read_ADC return Sample_Type is
+      Tmp : constant Sample_Array (1 .. 1) := Read_ADC;
+   begin
+      return Tmp (1);
+   end Read_ADC;
+
    ---------------
    -- Write_Dac --
    ---------------
@@ -30,6 +40,17 @@ package body Fakedsp.Card is
    begin
       Out_Buffer.Put (Data);
    end Write_Dac;
+
+   ---------------
+   -- Write_Dac --
+   ---------------
+
+   procedure Write_Dac (Data : Sample_Type) is
+      Tmp : constant Sample_Array (1 .. 1) := (1 => Data);
+   begin
+      Write_Dac (Tmp);
+   end Write_Dac;
+
 
    --------------
    -- Wait_For --
@@ -43,6 +64,13 @@ package body Fakedsp.Card is
          exit when S = State;
       end loop;
    end Wait_For;
+
+   -------------------
+   -- Current_State --
+   -------------------
+
+   function Current_State return State_Type
+   is (Background_Tasks.Adc_State.Peek);
 
 
 

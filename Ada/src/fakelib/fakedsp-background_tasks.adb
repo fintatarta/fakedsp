@@ -1,7 +1,7 @@
 pragma Ada_2012;
 with Ada.Text_IO; use Ada.Text_IO;
 package body Fakedsp.Background_Tasks is
-
+   use Fakedsp.Card;
 
    -------------
    -- Adc_Dac --

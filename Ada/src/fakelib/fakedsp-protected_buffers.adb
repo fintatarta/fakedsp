@@ -30,6 +30,9 @@ package body Fakedsp.Protected_Buffers is
          S := State;
          Changed := False;
       end Get;
+
+      function Peek return State_Type
+      is (State);
    end State_Buffer;
 
    -------------------

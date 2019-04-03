@@ -1,7 +1,6 @@
 pragma Ada_2012;
 with Ada.Numerics.Elementary_Functions;
 with Ada.Text_IO; use Ada.Text_IO;
-with Fakedsp.Card;
 
 package body Notch_Filters is
 
