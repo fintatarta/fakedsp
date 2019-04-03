@@ -85,6 +85,6 @@ begin
 
 exception
    when Parsing_Error =>
-      Put_Line (Standard_Error,  "Usage: main f0 file_in file_out [r]");
+      Put_Line (Standard_Error,  "Usage: "& Command_Name & " f0 file_in file_out [pole_radius]");
       Set_Exit_Status (Failure);
 end Main;
