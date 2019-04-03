@@ -17,7 +17,7 @@ A tentative is done to call the virtual handler with the chosen sampling frequen
 
 Well, you can learn... :-) 
 
-I think that Ada is a very nice and modern language that helps you writing very robust software easily and in short time. Debugging times are typically 10% of the debugging time of C. (**Note**: 10% *of..* **not** 10% *smaller...*) A main drawback is that is it is not widely known and there is not much material to learn it.  Nevertheless, there are few *very good* resources
+I think that Ada is a very nice and modern language that helps you writing very robust software easily and in short time. Debugging times are typically 10% of the debugging time of C. (**Note**: 10% *of..* **not** 10% *smaller...*) I abandoned C since I learned Ada. A main drawback is that is it is not widely known and there is not much material to learn it.  Nevertheless, there are few *very good* resources
 
 * [Ada 95 tutorial]:https://dwheeler.com/lovelace/lovelace.htm [Ada 95 tutorial] 
 This is an old tutorial (with excercises) about Ada 95.  I learned Ada with this.  Ada 95 is a fairly old version of Ada (now we are at Ada 2012) and many new features are missing, but it is a good introduction to the language.  If you are new to the language, breaking the ground with this can be a good idea.
@@ -28,4 +28,10 @@ Adacore is the producer of GNAT, the gcc frontend for Ada. In this site you can 
 * There is also the newsgroup (yes! they are still alive!) **comp.lang.ada** quite active, with a good signal to noise ratio and many people wiling to help beginners (although you must be nice too... this goes without saying...).  There is also a LinkedIn group, but it is less active and more for announcements etc. I know that there is also an IRC channel, but I am not an IRC user.
 
 You can download open source IDE, compilers, and so on... from the [Adacore]:https://www.adacore.com/download [Adacore] site. 
+
+Oh, yes, if you come definitively to the dark side and want to meet with other Adaists, keep an eye on the [FOSDEM]:https://fosdem.org/ the Free and Open Source Developers European Meeting, hold yearly in Bruxells.  Often in the program there is the *Ada dev room* with interesting talks and introductions for beginners.  Some past editions
+
+* [2019]: https://fosdem.org/2019/schedule/track/ada/ [2019]
+* [2018]: https://archive.fosdem.org/2018/schedule/track/ada/ [2018]
+* [2016]: https://archive.fosdem.org/2016/schedule/track/ada/ [2016]
 
