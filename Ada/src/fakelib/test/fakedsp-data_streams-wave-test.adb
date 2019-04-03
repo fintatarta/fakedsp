@@ -22,6 +22,8 @@ begin
 
    declare
       Q : Wave_Source_Access := Open ("test_data/rumenta/b.wav");
+      pragma Unreferenced (Q);
+
    begin
       null;
    end;

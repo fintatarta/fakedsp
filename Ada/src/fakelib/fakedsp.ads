@@ -1,23 +1,27 @@
+--  @summary
+--  Root of the library
 --
--- This hierarchy of packages provides a library to write code with
--- a DSP-style on a PC.  The user will be most probably interested in
--- two packages:
+--  @description
+--  The library fakedsp allows  to write code with a DSP-style on a normal PC.
+--  I wrote this to help my students in doing their lab activities.
 --
--- * Fakedsp.Card that provides the interface to the "virtual DSP card"
+--  The user of the library will be most probably interested in
+--  the package Fakedsp.Card that provides the interface to the
+--  "virtual DSP card."
 --
--- * Fakedsp.Data_Streams and its descendants that provide the way
---   the virtual card read/write samples.  Most probably the user will
---   use just Fakedsp.Data_Streams.Files that provide a unified interface
---   to file-based data-streams.
+--  Another package of interest is probably Fakedsp.Data_Streams.Files
+--  that implement the Data_Source/Data_Destination interfaces
+--  (defined in Fakedsp.Data_Streams) that represent the main abstraction
+--  for data I/O.
 --
-
 package Fakedsp is
+   -- Number of bits of the sample read from the ADC/written to the DAC
    Sample_Size : constant := 16;
 
+   -- Type representing the sample read from the ADC/written to the DAC
    type Sample_Type is
    range -(2 ** (Sample_Size - 1)) .. 2 ** (Sample_Size - 1)-1
      with Size => 16;
-   -- Type representing the sample read from the ADC/written to the DAC
 
    type Sample_Array is array (Natural range <>) of Sample_Type;
 
