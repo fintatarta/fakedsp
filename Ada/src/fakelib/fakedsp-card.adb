@@ -94,6 +94,8 @@ package body Fakedsp.Card is
                                    Input         => Input,
                                    Output        => Output,
                                    Handler       => Callback);
+
+      Background_Tasks.Adc_Dac.Ready;
    end Start;
 
 begin

@@ -32,7 +32,10 @@ package Fakedsp.Card is
                     Output          : Data_Streams.Data_destination_Access;
                     In_Buffer_Size  : Positive := 1;
                     Out_Buffer_Size : Positive := 1)
-     with Pre => Current_State = Sleeping;
+     with
+       Pre => Current_State = Sleeping,
+       Post => Current_State = Running;
+
    -- Turn on the "virtual acquisition card."  Data will be read from the
    -- input source Input and written to Output.  Data can be read/write
    -- sample by sample or blockwise (simulating a kind of DMA).  The size

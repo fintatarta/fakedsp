@@ -1,5 +1,5 @@
 pragma Ada_2012;
-with Ada.Text_IO; use Ada.Text_IO;
+--  with Ada.Text_IO; use Ada.Text_IO;
 package body Fakedsp.Background_Tasks is
    use Fakedsp.Card;
 
@@ -102,7 +102,7 @@ package body Fakedsp.Background_Tasks is
       or
          terminate;
       end select;
-      Put_Line ("T=" & Sampling_Period'Img);
+--        Put_Line ("T=" & Sampling_Period'Img);
       declare
          In_Buffer  : Sample_Array (1 .. Shared_In_Buffer.Length);
          Out_Buffer : Sample_Array (1 .. Shared_Out_Buffer.Length);
@@ -112,6 +112,8 @@ package body Fakedsp.Background_Tasks is
       begin
          Out_Buffer := Shared_Out_Buffer.Get;
          Adc_State.Set (Running);
+
+         accept Ready;
 
          loop
             delay Sampling_Period;
