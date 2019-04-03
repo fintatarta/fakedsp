@@ -7,14 +7,14 @@ The goal of this library is to allow the students to write software with the sam
 
 Well, I think that Ada is a very nice and modern language that helps you writing very robust software easily and in short time. Debugging times are typically 10% of the debugging time of C. (**Note**: 10% *of..* **not** 10% *smaller...*) A main drawback is that is it is not widely known and there is not much material to learn it.  Nevertheless, there are few *very good* resources
 
-* [Ada 95 tutorial]:https://dwheeler.com/lovelace/lovelace.htm[Ada 95 tutorial] 
+* [Ada 95 tutorial]:https://dwheeler.com/lovelace/lovelace.htm [Ada 95 tutorial] 
 This is an old tutorial (with excercises) about Ada 95.  I learned Ada with this.  Ada 95 is a fairly old version of Ada (now we are at Ada 2012) and many new features are missing, but it is a good introduction to the language
-* [Adacore]:https://learn.adacore.com/[Adacore]
+* [Adacore]:https://learn.adacore.com/ [Adacore]
 Adacore is the producer of GNAT, the gcc frontend for Ada. In this site you can find an introduction to Ada and an introduction to SPARK (a subset of Ada suitable for formal checking, nothing to do with Apache...).  I did not use them, but they look nice (and relative to more modern Ada versions)
-* [Adaic]:https://www.adaic.org/learn/materials/[Adaic] This is a meta-resource, it is a site with lots of links to learning material, libraries, tools, and so on...  
-* [RM]:https://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html:[RM] It is not possible not to mention the famous and fundamental **Reference Manual**. This is the standard ISO describing the language, it is written in "computer science legalese" and if it was a bit more obscure it would seem encrypted. :-)  Seriously, this is the ultimate resource to know about Ada, although you need to get used to it.  The annotated version and the corresponding "Rationale" (that you can find on the Adaic site) often can help since they do not need to be as formal as the reference text. 
+* [Adaic]:https://www.adaic.org/learn/materials/ [Adaic] This is a meta-resource, it is a site with lots of links to learning material, libraries, tools, and so on...  
+* [RM]:https://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html [RM] It is not possible not to mention the famous and fundamental **Reference Manual**. This is the standard ISO describing the language, it is written in "computer science legalese" and if it was a bit more obscure it would seem encrypted. :-)  Seriously, this is the ultimate resource to know about Ada, although you need to get used to it.  The annotated version and the corresponding "Rationale" (that you can find on the Adaic site) often can help since they do not need to be as formal as the reference text. 
 
-You can download open source IDE, compilers, and so on... from the [Adacore]:https://www.adacore.com/download[Adacore] site. 
+You can download open source IDE, compilers, and so on... from the [Adacore]:https://www.adacore.com/download [Adacore] site. 
 
 # How do I use this?
 
