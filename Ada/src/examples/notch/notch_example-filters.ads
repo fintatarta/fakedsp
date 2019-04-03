@@ -1,6 +1,6 @@
 with Fakedsp.Card;
 
-package Notch_Filters is
+package Notch_Example.filters is
    type Normalized_Frequency is digits 16 range 0.0 .. 1.0;
 
    type Notch_Filter is new Fakedsp.Card.Callback_Handler with private;
@@ -29,4 +29,4 @@ private
          Gain             : Float;        --
       end record;
 
-end Notch_Filters;
+end Notch_Example.Filters;

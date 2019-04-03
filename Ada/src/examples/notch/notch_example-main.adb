@@ -4,9 +4,9 @@ with Ada.Command_Line;     use Ada.Command_Line;
 
 with Fakedsp.Card;
 with Fakedsp.Data_Streams.Files;
-with Notch_Filters;
+with Notch_Example.Filters;
 
-procedure Main is
+procedure Notch_Example.Main is
    --
    -- This example processes the input using a notch filter that remove
    -- a specified frequency F0 placing the poles at distance R from
@@ -57,7 +57,7 @@ begin
    Parse_Command_Line (F0, Pole_Radius, Src, Dst);
 
    declare
-      use Notch_Filters;
+      use Filters;
       use Fakedsp;
 
       -- Create the required notch filter.  Note that the type Notch_Filter
@@ -65,7 +65,7 @@ begin
       -- interface defined in Faksdsp.Card.  Therefore, we can use the
       -- Notch_filter as handler of the virtual interrupts produced by
       -- virtual card.
-      Filter : constant Notch_Filters.Filter_Access :=
+      Filter : constant Filters.Filter_Access :=
                  New_Filter (F0 => Normalized_Frequency (F0 / Src.Sampling_Frequency),
                              R  => Pole_Radius);
    begin
@@ -87,4 +87,4 @@ exception
    when Parsing_Error =>
       Put_Line (Standard_Error,  "Usage: "& Command_Name & " f0 file_in file_out [pole_radius]");
       Set_Exit_Status (Failure);
-end Main;
+end Notch_Example.Main;

@@ -2,7 +2,7 @@ pragma Ada_2012;
 with Ada.Numerics.Elementary_Functions;
 --  with Ada.Text_IO; use Ada.Text_IO;
 
-package body Notch_Filters is
+package body Notch_Example.Filters is
 
    ----------------
    -- New_Filter --
@@ -72,4 +72,4 @@ package body Notch_Filters is
       Card.Write_Dac (Saturate (Output * X.Gain));
    end Sample_Ready;
 
-end Notch_Filters;
+end Notch_Example.Filters;
