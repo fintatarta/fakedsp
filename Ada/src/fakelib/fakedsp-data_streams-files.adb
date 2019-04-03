@@ -15,7 +15,7 @@ package body Fakedsp.Data_Streams.Files is
 
    subtype File_Extension is String (1 .. 3);
 
-   Extension_To_Type : array (Known_Types) of File_Extension := (Wav  => "wav",
+   Extension_To_Type : constant array (Known_Types) of File_Extension := (Wav  => "wav",
                                                                  Text => "txt");
    ------------------
    -- Name_To_Type --
@@ -23,7 +23,7 @@ package body Fakedsp.Data_Streams.Files is
 
    function Name_To_Type (Name : String) return File_Type
    is
-      Ext : String := Ada.Directories.Extension (Name);
+      Ext : constant String := Ada.Directories.Extension (Name);
    begin
       if Ext'Length /= File_Extension'Length then
          return Unknown;

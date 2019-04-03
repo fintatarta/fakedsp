@@ -19,7 +19,6 @@ package body Fakedsp.Background_Tasks is
       task body Reader
       is
          Sample   : Sample_Type;
-         Continue : Boolean := True;
          Input    : Data_Source_Access;
          End_Of_Data : Boolean;
       begin

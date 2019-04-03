@@ -5,7 +5,6 @@ with Ada.Exceptions;
 with Ada.Task_Identification;
 with Ada.Task_Termination;
 
-use Ada;
 package body Utilities.Task_Reaper is
 
    -----------------

@@ -2,9 +2,8 @@
 -- This package
 --
 
-with Ada.Strings.Unbounded; use Ada.Strings.Unbounded;
 package Fakedsp is
-   Sample_Size : constant Natural := 16;
+   Sample_Size : constant := 16;
 
    type Sample_Type is
    range -(2 ** (Sample_Size - 1)) .. 2 ** (Sample_Size - 1)-1

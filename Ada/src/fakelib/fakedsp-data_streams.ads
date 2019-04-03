@@ -5,7 +5,7 @@ package Fakedsp.Data_Streams is
 
    type Data_Source_Access is access all Data_Source'Class;
 
-   procedure Read (Src           : Data_Source;
+   procedure Read (Src           : in out Data_Source;
                    Sample        : out Sample_Type;
                    End_Of_Stream : out Boolean;
                    Channel       : Channel_Index := Channel_Index'First)

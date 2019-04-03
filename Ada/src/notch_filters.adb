@@ -1,6 +1,7 @@
 pragma Ada_2012;
 with Ada.Numerics.Elementary_Functions;
-with Ada.Text_IO; use Ada.Text_IO;
+--  with Ada.Text_IO; use Ada.Text_IO;
+with Fakedsp.Card;
 
 package body Notch_Filters is
 
@@ -33,7 +34,6 @@ package body Notch_Filters is
 
    procedure Sample_Ready (X : in out Notch_Filter) is
       use Fakedsp;
-      use Fakedsp.Card;
 
       buffer : Sample_Array (1 .. 1);
       Input : Float;

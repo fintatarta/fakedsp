@@ -56,7 +56,7 @@ package body Fakedsp.Data_Streams.Wave is
       function Read_Format_Chunk is new Utilities.Read_Chunk (Format_Chunk);
       function Read_Data_Header  is new Utilities.Read_Chunk (Data_Chunk_Header);
 
-      Result : Wave_Source_Access := new Wave_Source;
+      Result : constant Wave_Source_Access := new Wave_Source;
    begin
       Open (File => Result.File,
             Mode => In_File,
@@ -105,7 +105,7 @@ package body Fakedsp.Data_Streams.Wave is
    ----------
 
    procedure Read
-     (Src           : Wave_Source;
+     (Src           : in out Wave_Source;
       Sample        : out Sample_Type;
       End_Of_Stream : out Boolean;
       Channel       : Channel_Index := Channel_Index'First)

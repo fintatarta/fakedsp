@@ -1,12 +1,16 @@
 project Fakedsp is
 
-   for Source_Dirs use ("src", "src/fakelib", "src/popenlib", "src/fakelib/test");
+   for Source_Dirs use ("src", "src/fakelib", "src/fakelib/test");
    for Object_Dir use "obj";
    for Main use ("fakedsp-data_streams-wave-test.adb", "main.adb");
 
    package Ide is
       for Vcs_Kind use "git";
    end Ide;
+
+   package Compiler is
+      for Switches ("ada") use ("-gnatwa", "-gnat12");
+   end Compiler;
 
 end Fakedsp;
 

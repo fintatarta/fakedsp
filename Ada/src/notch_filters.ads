@@ -1,4 +1,4 @@
-with Fakedsp.Card;
+with Fakedsp;
 
 package Notch_Filters is
    type Normalized_Frequency is digits 16 range 0.0 .. 1.0;

@@ -1,7 +1,7 @@
 procedure Fakedsp.Data_Streams.Wave.Test is
-   Source : Wave_Source_Access := Open ("test_data/a.wav");
+   Source : constant Wave_Source_Access := Open ("test_data/a.wav");
 
-   Dst    : Wave_Destination_Access := Wave.Open (Filename     => "test_data/rumenta/b.wav",
+   Dst    : constant Wave_Destination_Access := Wave.Open (Filename     => "test_data/rumenta/b.wav",
                                            Sampling     => Source.Sampling_Frequency,
                                            Last_Channel => Source.Max_Channel);
 

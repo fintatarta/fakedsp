@@ -7,7 +7,6 @@
 
 with Interfaces.C; use Interfaces.C;
 with Ada.Characters.Latin_1;
-with System;
 
 package body Pipe_Commands is
    

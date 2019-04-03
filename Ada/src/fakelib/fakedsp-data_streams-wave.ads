@@ -8,7 +8,7 @@ package Fakedsp.Data_Streams.Wave is
 
    function Open (Filename : String) return Wave_Source_Access;
 
-   procedure Read (Src           : Wave_Source;
+   procedure Read (Src           : in out Wave_Source;
                    Sample        : out Sample_Type;
                    End_Of_Stream : out Boolean;
                    Channel       : Channel_Index := Channel_Index'First);

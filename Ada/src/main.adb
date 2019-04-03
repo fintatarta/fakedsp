@@ -36,7 +36,7 @@ begin
       use Notch_Filters;
       use Fakedsp;
 
-      Filter : Filter_Access :=
+      Filter : constant Filter_Access :=
         New_Filter (F0 => Normalized_Frequency (Float (F0) / Float (Src.Sampling_Frequency)),
                     R  => R);
    begin
