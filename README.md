@@ -13,4 +13,7 @@ The main program can wait for the card to stop (this happens when the virtual AD
 
 A tentative is done to call the virtual handler with the chosen sampling frequency.  Unfortunately, in common OS the resolution of timing in process switching is limited by the frequency the kernel is interrupted (100 Hz is a common value) and this makes almost impossible to have a realistici, say, 8 kHz sampling.
 
+## Where do I find a more detailed explanation of the two libraries?
 
+* Under the C directory you'll find the file **fakedsk-doc.pdf**
+* Under the Ada directory **Ada/doc/html/** start from the file **rootdoc_docRoot2FFakedsp.html**.  If the file or the directory is missing, run robodoc in Ada
