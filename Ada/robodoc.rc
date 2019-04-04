@@ -16,6 +16,7 @@ options:
     --sections
     --ignore_case_when_linking
     --syntaxcolors
+    --sourceindex "Source files,sources"
 source items:
     SYNOPSIS
 items:
@@ -143,6 +144,7 @@ ignore items:
     HISTORY
 headertypes:
     p  Packages robo_packages
+    I  "Abstract Interfaces" robo_interfaces
     u  Unittests robo_unittest
     x  "System tests"  robo_sys_tests
     e  "Makefile entries"  robo_mk_entries

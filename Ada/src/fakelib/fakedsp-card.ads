@@ -40,7 +40,7 @@ package Fakedsp.Card is
    --   data from the source; when out of data, the card goes in End_Of_Data.
    --
    -- SOURCE
-      type State_Type is (Sleeping, Running, End_Of_Data);
+   type State_Type is (Sleeping, Running, End_Of_Data);
    --***
       
    --****m* Fakedsp.card/Current_State
@@ -59,34 +59,55 @@ package Fakedsp.Card is
    --   since it checks the state only when it changes.
    --***
    
-   --****t* Fakedsp.card/Callback_Handler,Sample_Ready,Callback_Handler_Access
+   --****I* Fakedsp.card/Callback_Handler
    -- SOURCE
    type Callback_Handler is interface;
-      
-   procedure Sample_Ready (H : in out Callback_Handler)
-      is abstract;
+   
+   procedure Sample_Ready (H : in out Callback_Handler) is abstract;
 
-   type Callback_Handler_Access is access all Callback_Handler'Class;
    -- DESCRIPTION
-   --   A Callback_Handler play a role similar to an interrupt handler
-   --   A Callback_Handler must define a procedure Sample_Ready that
-   --   will be called when a sample is ready at the ADC to be read.
+   --   A Callback_Handler defines an interface similar to that of 
+   --   an interrupt handler.
+   --
+   --   A concrete implementation of interface Callback_Handler is just 
+   --   required to define a procedure Sample_Ready that
+   --   will be called when a new sample from the ADC is ready to be 
+   --   acquired.
+   --
    --   Why an object rather than a simple callback?  Because an object
-   --   can carry a state (e.g., the old samples in a filter)
+   --   can carry a state.  For example, if the handler implements some
+   --   filter it needs to keep the past story of the signal and this
+   --   would be more cumbersome with a simple callback. 
+   --***
+
+   --****t* Fakedsp.card/Callback_Handler_Access
+   -- SOURCE
+   type Callback_Handler_Access is access all Callback_Handler'Class;
+   --***
+   
+   --****m* Callback_Handler/Sample_Ready
+   -- SOURCE
+   --    procedure Sample_Ready (H : in out Callback_Handler) is abstract;
+   --
+   -- DESCRIPTION
+   --   Procedure to be implemented by any concrete implementation of 
+   --   Callback_Handler. It will be called every time a new sample
+   --   is ready.
    --***
 
    --****m* Fakedsp.card/Start
    -- SOURCE
    procedure Start (Callback        : Callback_Handler_Access;
                     Input           : Data_Streams.Data_Source_Access;
-                    Output          : Data_Streams.Data_destination_Access;
+                    Output          : Data_Streams.Data_Destination_Access;
                     In_Buffer_Size  : Positive := 1;
                     Out_Buffer_Size : Positive := 1)
      with
        Pre => Current_State = Sleeping,
-     Post => Current_State = Running
-     and ADC_DMA_Size = in_buffer_size
-     and DAC_DMA_Size = out_buffer_size;
+       Post => 
+         Current_State = Running
+         and ADC_DMA_Size = In_Buffer_Size
+         and DAC_DMA_Size = Out_Buffer_Size;
    -- DESCRIPTION
    --   Turn on the "virtual acquisition card."  Data will be read from the
    --   input source Input and written to Output.  Data can be read/write
@@ -104,23 +125,23 @@ package Fakedsp.Card is
    
    --****m* Fakedsp.card/ADC_DMA_Size,DAC_DMA_Size
    -- SOURCE
-   function ADC_DMA_Size return positive
-     with pre => current_state > sleeping;
+   function ADC_DMA_Size return Positive
+     with Pre => Current_State > Sleeping;
    
-   function DAC_DMA_Size return positive
-     with pre => current_state > sleeping;
+   function DAC_DMA_Size return Positive
+     with Pre => Current_State > Sleeping;
    --***
    
    --****m* Fakedsp.card/Read_ADC
    -- SOURCE
    function Read_ADC return Sample_Array
-       with Pre => Current_State > Sleeping;
+     with Pre => Current_State > Sleeping;
    
    function Read_ADC return Sample_Type
-     with Pre => Current_State > Sleeping and ADC_DMA_Size=1;
+     with Pre => Current_State > Sleeping and ADC_DMA_Size = 1;
    
    function Read_ADC return Float
-     with Pre => Current_State > Sleeping and ADC_DMA_Size=1;
+     with Pre => Current_State > Sleeping and ADC_DMA_Size = 1;
    -- DESCRIPTION 
    --  Read the sample (or block of samples) previously
    --  read by the virtual ADC.  Note that if this function is called
@@ -137,13 +158,13 @@ package Fakedsp.Card is
    --****m* Fakedsp.card/Write_DAC
    -- SOURCE
    procedure Write_Dac (Data : Sample_Array)
-       with Pre => Current_State > Sleeping;
+     with Pre => Current_State > Sleeping;
 
    procedure Write_Dac (Data : Sample_Type)
-       with Pre => Current_State > Sleeping and DAC_DMA_Size=1;
+     with Pre => Current_State > Sleeping and DAC_DMA_Size = 1;
    
    procedure Write_Dac (Data : Float)
-     with Pre => Current_State > Sleeping and DAC_DMA_Size=1;
+     with Pre => Current_State > Sleeping and DAC_DMA_Size = 1;
    -- DESCRIPTION
    --   Write a sample (or a block of samples) to the virtual DAC.
    -- 
