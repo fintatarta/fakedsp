@@ -29,7 +29,7 @@
 --    the package Files
 --  * Turn on the virtual card by calling the procedure Start in 
 --    Fakedsp.Card  The code, behind the scenes,  will get the data
---    from the Data_Source, write Data to the Data_Destination and call
+--    from the Data_Source, send results to the Data_Destination and call
 --    your handler
 --
 -- INSTALLING
@@ -55,6 +55,69 @@
 --   In the usual spirit of Ada, a detailed (enough) description of 
 --   the interface of the different packages is embedded directly
 --   in the spec file (extension
---   |html <code>.ads</ads>).  The most important 
+--   |html <code>.ads</code>).  
+--
+-- NOTES
+--
+--   |html <h3>But I do not know Ada!</h3>
+--
+--   Well, you can learn... :-)
+--
+--   I think that Ada is a very nice and modern language that helps you
+--   writing very robust software easily and in short time. Debugging times
+--   are typically 10% of the debugging time of C. (Note: 10% of..,
+--   not 10% smaller...) I abandoned C since I learned Ada.
+--   
+--   A main issue with Ada is that is it is not widely known 
+--   and there is not much material to learn it.  Nevertheless, there 
+--   are few very good resources
+--
+--   |html <ul>
+--   |html <li><a href="https://dwheeler.com/lovelace/lovelace.htm">Ada 95 Tutorial</a> This is an old tutorial (with excercises) about Ada 95.  I
+--   learned Ada with this.  Ada 95 is a fairly old version of Ada (now we
+--   are at Ada 2012) and many new features are missing, but it is a good
+--   introduction to the language.  If you are new to the language,
+--   breaking the ground with this can be a good idea.
+--   |html <li><a href="https://learn.adacore.com">Adacore</a> 
+--   Adacore is the
+--   producer of GNAT, the gcc frontend for Ada. In this site you can find
+--   an introduction to Ada and an introduction to SPARK (a subset of Ada
+--   suitable for formal checking, nothing to do with Apache...).  I did
+--   not use them, but they look nice (and relative to more modern Ada
+--   versions)
+--   |html <li><a href="https://www.adaic.org/learn/materials/">Adaic</a> 
+--   This is a meta-resource, it is a site with lots of 
+--   links to learning material, libraries, tools, and so on...
+--   |html <li><a href="https://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html">RM</a>.
+--   It is not possible not to mention the
+--   (in)famous and
+--   fundamental **Reference Manual**. This is the standard ISO
+--   describing the language, it is written in "computer science
+--   legalese" and if it was a bit more obscure it would seem
+--   encrypted. :-) Seriously, this is the ultimate resource to know
+--   about Ada, although you need to get used to it.  The annotated
+--   version and the corresponding "Rationale" (that you can find on the
+--   Adaic site) often can help since they do not need to be as formal as
+--   the reference text.
+--   |html <li>There is also the newsgroup (yes! they are still alive!)
+--   |html <code>comp.lang.ada</code> quite active, with a good
+--   signal to noise ratio
+--   and many people wiling to help beginners (although you must be nice
+--   too... this goes without saying...).  There is also a LinkedIn
+--   group, but it is less active and more for announcements etc. I know
+--   that there is also an IRC channel, but I am not an IRC user.
+--   |html </ul>
+--   
+--   You can download open source IDE, compilers, and so on... from the [Adacore]:https://www.adacore.com/download [Adacore] site.  
+--   
+--   Oh, yes, if you come definitively to the dark side and want to meet
+--   with other Adaists, keep an eye on the [FOSDEM]:https://fosdem.org/
+--   the Free and Open Source Developers European Meeting, hold yearly in
+--   Bruxells.  Often in the program there is the *Ada dev room* with
+--   interesting talks and introductions for beginners.  Some past Editions:
+--   * 2019: href:https://fosdem.org/2019/schedule/track/ada/
+--   * 2018: href:https://archive.fosdem.org/2018/schedule/track/ada/ 
+--   * 2016: href:https://archive.fosdem.org/2016/schedule/track/ada/ 
+--
 --
 --***
