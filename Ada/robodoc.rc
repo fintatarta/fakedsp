@@ -143,6 +143,7 @@ keywords:
 ignore items:
     HISTORY
 headertypes:
+    R  "Documentation root" robo_root
     p  Packages robo_packages
     I  "Abstract Interfaces" robo_interfaces
     u  Unittests robo_unittest
@@ -184,6 +185,7 @@ ignore files:
     FileFilterSrc
 accept files:
     fakedsp*.ads
+    rootdoc.doc
 remark begin markers:
     --****
 remark end markers:
