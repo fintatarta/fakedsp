@@ -4,7 +4,6 @@ use Ada;
 with Ada.Text_IO;
 
 package body Fakedsp.Data_Streams.Text is
-   use Utilities;
 
    Sampling_Frequency_Key : constant String := "Fs";
 
@@ -13,7 +12,10 @@ package body Fakedsp.Data_Streams.Text is
    -- Open --
    ----------
 
-   function Open (Filename : String := Standard_IO_Name) return Text_Source_Access is
+   function Open_Source (Filename : String := Standard_IO_Name;
+                         Options  : Option_Lists.Option_List := Option_Lists.Empty_List)
+                         return Text_Source_Access is
+      pragma Unreferenced (Options);
 
       procedure Parse_Header (Item : Text_Source_Access) is
          use Text_IO;
@@ -109,7 +111,7 @@ package body Fakedsp.Data_Streams.Text is
       Parse_Header (Result);
 
       return Result;
-   end Open;
+   end Open_Source;
 
    ----------
    -- Read --
@@ -188,12 +190,15 @@ package body Fakedsp.Data_Streams.Text is
    -- Open --
    ----------
 
-   function Open
+   function Open_Destination
      (Filename     : String := Standard_IO_Name;
       Sampling     : Frequency_Hz := 8000.0;
-      Last_Channel : Channel_Index := 1)
+      Last_Channel : Channel_Index := 1;
+      Options      : Option_Lists.Option_List := Option_Lists.Empty_List)
       return Text_Destination_Access
    is
+      pragma Unreferenced (Options);
+
       Result : constant Text_Destination_Access :=
                  new Text_Destination'(File           => <>,
                                        Top_Channel    => Last_Channel,
@@ -220,7 +225,7 @@ package body Fakedsp.Data_Streams.Text is
       Hybrid_Files.New_Line (Result.File);
 
       return Result;
-   end Open;
+   end Open_Destination;
 
    -----------
    -- Write --

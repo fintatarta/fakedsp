@@ -1,5 +1,8 @@
 with Utilities.Hybrid_Files;
+with Utilities.Option_Lists;
 
+use Utilities;
+use Utilities.Option_Lists;
 
 package Fakedsp.Data_Streams.Text is
    type Text_Source is  limited new Data_Source with private;
@@ -7,7 +10,9 @@ package Fakedsp.Data_Streams.Text is
 
    Standard_IO_Name : constant String;
 
-   function Open (Filename : String := Standard_IO_Name) return Text_Source_Access;
+   function Open_Source (Filename : String := Standard_IO_Name;
+                         Options  : Option_List := Empty_List)
+                         return Text_Source_Access;
 
    procedure Read (Src           : in out Text_Source;
                    Sample        : out Sample_Type;
@@ -27,18 +32,21 @@ package Fakedsp.Data_Streams.Text is
 
    procedure Close (Src : in out Text_Source);
 
-   function Standard_Input return Text_Source_Access;
+   function Standard_Input (Options : Option_List := Empty_List)
+                            return Text_Source_Access;
 
 
    type Text_Destination is limited new Data_Destination with private;
    type Text_Destination_Access is access Text_Destination;
 
-   function Open (Filename     : String := Standard_IO_Name;
-                  Sampling     : Frequency_Hz := 8000.0;
-                  Last_Channel : Channel_Index := 1)
-                  return Text_Destination_Access;
+   function Open_Destination (Filename     : String := Standard_IO_Name;
+                              Sampling     : Frequency_Hz := 8000.0;
+                              Last_Channel : Channel_Index := 1;
+                              Options      : Option_List := Empty_List)
+                              return Text_Destination_Access;
 
-   function Standard_Output return Text_Destination_Access;
+   function Standard_Output (Options : Option_List := Empty_List)
+                             return Text_Destination_Access;
 
    procedure Write (Dst     : Text_Destination;
                     Sample  : Sample_Type;
@@ -80,8 +88,9 @@ private
    is (Src.Top_Channel);
 
 
-   function Standard_Input return Text_Source_Access
-   is (Open (Standard_IO_Name));
+   function Standard_Input (Options : Option_List := Empty_List)
+                            return Text_Source_Access
+   is (Open_Source (Standard_IO_Name, Options));
 
    type Text_Destination is limited new Data_Destination with
       record
@@ -96,6 +105,10 @@ private
    is (Src.Top_Channel);
 
 
-   function Standard_Output return Text_Destination_Access
-   is (Open (Standard_IO_Name));
+   function Standard_Output (Options : Option_List := Empty_List)
+                             return Text_Destination_Access
+   is (Open_Destination (Filename     => Standard_IO_Name,
+                         Sampling     => 8000.0,
+                         Last_Channel => 1,
+                         Options      => Options));
 end Fakedsp.Data_Streams.Text;
