@@ -20,6 +20,10 @@ options:
 source items:
     SYNOPSIS
 items:
+    WHAT IS THIS?
+    HOW DO I USE IT?
+    SEE ALSO
+    INSTALLING
     SOURCE
     NAME
     COPYRIGHT
@@ -53,7 +57,6 @@ items:
     TODO
     IDEAS
     PORTABILITY
-    SEE ALSO
     METHODS
     NEW METHODS
     ATTRIBUTES

@@ -1,4 +1,60 @@
 --****R* Root/Fakedsp
--- DESCRIPTIION
---  This is a test
+-- WHAT IS THIS?
+--   This is the Ada version of the Fakedsp library. The library provides
+--   the equivalent of a virtual card with an ADC and a DAC.  The ADC
+--   acquires samples at a given sampling frequency and every time 
+--   a sample is ready a 
+--   |html <i>virtual interrupt handler</i> (written by the user) is called.   
+--   At the same time the DAC updates its output.
+--
+--   The signal processing is typically carried out inside the virtual
+--   interrupt handler.  The virtual handler can get the samples 
+--   produced by the ADC by using the function Read_ADC and send the 
+--   processed data to the DAC by using the procedure Write_DAC.
+--
+--   Of course, the ADC and DAC are not real; therefore, the ADC samples
+--   will be read from a file and the DAC samples will be written to
+--   a file.
+--
+-- HOW DO I USE IT?
+--
+--  The typical workflow is the following:
+--  * Write the virtual interrupt handler (that, remember, will do the 
+--    processing) by creating a 
+--    |html <i>concrete version</i> of the interface Callback_Handler
+--    defined in the package Fakedsp.Card.
+--  * Create a Data_Source and a Data_Destination that will be used, 
+--    respecitvely, from the ADC and the DAC for sample I/O.  The easiest
+--    way to do this is to use the opening functions provided by 
+--    the package Files
+--  * Turn on the virtual card by calling the procedure Start in 
+--    Fakedsp.Card  The code, behind the scenes,  will get the data
+--    from the Data_Source, write Data to the Data_Destination and call
+--    your handler
+--
+-- INSTALLING
+--
+--    The installation is very simple: just put the content of directory 
+--    |html <code>fakelib/src</code> where your compiler will find it
+--    and that's it!  If you use the Adacore project manager
+--    |html <code>gprbuild</code>, just place the whole 
+--    |html <code>Ada</code> directory somewhere and
+--    |html <code>with</code> project 
+--    |html <code>fakedsp.gpr</code> inside your 
+--    |html <code>gpr</code> file.
+--
+-- EXAMPLE
+--
+--   You can find examples in the directory src/examples.  Currently there
+--   is only one example, namely an example of processing with a notch filter.
+--   Maybe more examples will be added in the future. This example can be
+--   used as a starting point for your own processing code.
+--
+-- SEE ALSO
+--
+--   In the usual spirit of Ada, a detailed (enough) description of 
+--   the interface of the different packages is embedded directly
+--   in the spec file (extension
+--   |html <code>.ads</ads>).  The most important 
+--
 --***
