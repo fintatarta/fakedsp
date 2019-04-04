@@ -52,9 +52,9 @@ package body Fakedsp.Data_Streams.Wave is
    is
       use Streams.Stream_IO;
 
---        function Read_Riff_Chunk   is new Utilities.Read_Chunk (RIFF_Chunk);
---        function Read_Format_Chunk is new Utilities.Read_Chunk (Format_Chunk);
---        function Read_Data_Header  is new Utilities.Read_Chunk (Data_Chunk_Header);
+      --        function Read_Riff_Chunk   is new Utilities.Read_Chunk (RIFF_Chunk);
+      --        function Read_Format_Chunk is new Utilities.Read_Chunk (Format_Chunk);
+      --        function Read_Data_Header  is new Utilities.Read_Chunk (Data_Chunk_Header);
 
       Result : constant Wave_Source_Access := new Wave_Source;
    begin
@@ -117,7 +117,7 @@ package body Fakedsp.Data_Streams.Wave is
       Channel       : Channel_Index := Channel_Index'First)
    is
 
---        function Read_Sample is new Utilities.Read_Chunk (Sample_Type);
+      --        function Read_Sample is new Utilities.Read_Chunk (Sample_Type);
    begin
       if Channel > Src.Top_Channel then
          raise Constraint_Error with "channel out of bound";
@@ -130,6 +130,22 @@ package body Fakedsp.Data_Streams.Wave is
          End_Of_Stream := True;
    end Read;
 
+
+   procedure Read (Src           : in out Wave_Source;
+                   Sample        : out Float;
+                   End_Of_Stream : out Boolean;
+                   Channel       : Channel_Index := Channel_Index'First)
+   is
+      Tmp : Sample_Type;
+   begin
+      Src.Read (Sample        => Tmp,
+                End_Of_Stream => End_Of_Stream,
+                Channel       => Channel);
+
+      Sample := Float (Tmp);
+   end Read;
+
+
    ----------
    -- Open --
    ----------
@@ -139,9 +155,9 @@ package body Fakedsp.Data_Streams.Wave is
                   Last_Channel : Channel_Index := 1)
                   return Wave_Destination_Access
    is
---        procedure Write_RIFF   is new Utilities.Write_Chunk (RIFF_Chunk);
---        procedure Write_Fmt    is new Utilities.Write_Chunk (Format_Chunk);
---        procedure Write_Header is new Utilities.Write_Chunk (Data_Chunk_Header);
+      --        procedure Write_RIFF   is new Utilities.Write_Chunk (RIFF_Chunk);
+      --        procedure Write_Fmt    is new Utilities.Write_Chunk (Format_Chunk);
+      --        procedure Write_Header is new Utilities.Write_Chunk (Data_Chunk_Header);
       use Ada.Streams.Stream_IO;
 
       N_Channel       : constant Int32 := Int32 ((Last_Channel + 1)-Channel_Index'First);
@@ -196,13 +212,26 @@ package body Fakedsp.Data_Streams.Wave is
       Sample  : Sample_Type;
       Channel : Channel_Index := Channel_Index'First)
    is
---        procedure Write_Sample is new Utilities.Write_Chunk (Sample_Type);
+      --        procedure Write_Sample is new Utilities.Write_Chunk (Sample_Type);
    begin
       if Channel > Dst.Top_Channel then
          raise Constraint_Error with "Channel out of bound";
       end if;
 
       Sample_Type'Write (Streams.Stream_IO.Stream (Dst.File), Sample);
+   end Write;
+
+   -----------
+   -- Write --
+   -----------
+
+   procedure Write (Dst     : Wave_Destination;
+                    Sample  : Float;
+                    Channel : Channel_Index := Channel_Index'First)
+   is
+   begin
+      Dst.Write (Sample  => Sample_Type (Sample),
+                 Channel => Channel);
    end Write;
 
    -----------
@@ -215,7 +244,7 @@ package body Fakedsp.Data_Streams.Wave is
 
       Len : constant Streams.Stream_IO.Count := Size (Dst.File);
 
---        procedure Write is new Utilities.Write_Chunk (Int32);
+      --        procedure Write is new Utilities.Write_Chunk (Int32);
    begin
       Set_Index (Dst.File, 5);
       Int32'Write (Stream (Dst.File), Int32 (Len)-8);

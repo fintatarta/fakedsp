@@ -13,6 +13,11 @@ package Fakedsp.Data_Streams.Wave is
                    End_Of_Stream : out Boolean;
                    Channel       : Channel_Index := Channel_Index'First);
 
+   procedure Read (Src           : in out Wave_Source;
+                   Sample        : out float;
+                   End_Of_Stream : out Boolean;
+                   Channel       : Channel_Index := Channel_Index'First);
+
    function Sampling_Frequency (Src : Wave_Source)
                                 return Frequency_Hz;
 
@@ -31,6 +36,10 @@ package Fakedsp.Data_Streams.Wave is
 
    procedure Write (Dst     : Wave_Destination;
                     Sample  : Sample_Type;
+                    Channel : Channel_Index := Channel_Index'First);
+
+   procedure Write (Dst     : Wave_Destination;
+                    Sample  : Float;
                     Channel : Channel_Index := Channel_Index'First);
 
    procedure Close (Dst : in out Wave_Destination);

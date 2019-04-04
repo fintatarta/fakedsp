@@ -70,7 +70,7 @@ package body Fakedsp.Data_Streams.Text is
                Put_Line (Standard_Error, "##" & Line & "##");
                if Line /= ""  then
                   if Line (Line'First) /= '#' then
-                     Item.Current_Sample := Sample_Type'Value (Line);
+                     Item.Current_Sample := Float'Value (Line);
                      Item.Empty := False;
                      Put_Line ("BACK");
                      return;
@@ -92,8 +92,9 @@ package body Fakedsp.Data_Streams.Text is
                  new Text_Source'(File           => <>,
                                   Top_Channel    => 1,
                                   Frequency      => 8000.0,
-                                  Current_Sample => 0,
-                                  Empty          => False);
+                                  Current_Sample => 0.0,
+                                  Empty          => False,
+                                  Format         => Sample_Format);
 
    begin
       if Filename = Standard_IO_Name then
@@ -116,11 +117,11 @@ package body Fakedsp.Data_Streams.Text is
 
    procedure Read
      (Src           : in out Text_Source;
-      Sample        : out Sample_Type;
+      Sample        : out Float;
       End_Of_Stream : out Boolean;
       Channel       : Channel_Index := Channel_Index'First)
    is
---        use Text_IO;
+      --        use Text_IO;
       pragma Unreferenced (Channel);
    begin
       -- Output sample is always set to the current sample, even if
@@ -130,7 +131,7 @@ package body Fakedsp.Data_Streams.Text is
       Sample := Src.Current_Sample;
 
       if Src.Empty then
---           Put_Line (Standard_Error, "FINITO");
+         --           Put_Line (Standard_Error, "FINITO");
          End_Of_Stream := True;
          return;
       else
@@ -139,15 +140,38 @@ package body Fakedsp.Data_Streams.Text is
 
 
       if Hybrid_Files.End_Of_File (Src.File) then
---           Put_Line (Standard_Error, "EOF");
+         --           Put_Line (Standard_Error, "EOF");
          Src.Empty := True;
       else
-         Src.Current_Sample := Sample_Type'Value (Hybrid_Files.Get_Line (Src.File));
+         Src.Current_Sample := (case Src.Format is
+                                   when Sample_Format =>
+                                     Float (Sample_Type'Value (Hybrid_Files.Get_Line (Src.File))),
+
+                                   when Float_Format  =>
+                                     Float'Value (Hybrid_Files.Get_Line (Src.File)));
+
          Src.Empty := False;
       end if;
-
-
    end Read;
+
+   ----------
+   -- Read --
+   ----------
+
+   procedure Read (Src           : in out Text_Source;
+                   Sample        : out Sample_Type;
+                   End_Of_Stream : out Boolean;
+                   Channel       : Channel_Index := Channel_Index'First)
+   is
+      Tmp : Float;
+   begin
+      Src.Read (Sample        => Tmp,
+                End_Of_Stream => End_Of_Stream,
+                Channel       => Channel);
+
+      Sample := Sample_Type (Tmp);
+   end Read;
+
 
    -----------
    -- Close --
@@ -173,7 +197,8 @@ package body Fakedsp.Data_Streams.Text is
       Result : constant Text_Destination_Access :=
                  new Text_Destination'(File           => <>,
                                        Top_Channel    => Last_Channel,
-                                       Frequency      => Sampling);
+                                       Frequency      => Sampling,
+                                       Format         => Sample_Format);
 
    begin
       if Filename = Standard_IO_Name then
@@ -206,10 +231,36 @@ package body Fakedsp.Data_Streams.Text is
       Sample  : Sample_Type;
       Channel : Channel_Index := Channel_Index'First)
    is
-      pragma Unreferenced (Channel);
    begin
-      Hybrid_Files.Put_Line (Dst.File, Sample_Type'Image (Sample));
+      case Dst.Format is
+         when Float_Format =>
+            Dst.Write (Float (Sample), Channel);
+
+         when Sample_Format =>
+            Hybrid_Files.Put_Line (Dst.File, Sample_Type'Image (Sample));
+
+      end case;
    end Write;
+
+   -----------
+   -- Write --
+   -----------
+
+   procedure Write (Dst     : Text_Destination;
+                    Sample  : Float;
+                    Channel : Channel_Index := Channel_Index'First)
+   is
+   begin
+      case Dst.Format is
+         when Float_Format =>
+            Hybrid_Files.Put_Line (Dst.File, Float'Image (Sample));
+
+         when Sample_Format =>
+            Dst.Write (Sample_Type (Sample), Channel);
+
+      end case;
+   end Write;
+
 
    -----------
    -- Close --

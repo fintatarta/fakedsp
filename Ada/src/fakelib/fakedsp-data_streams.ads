@@ -36,6 +36,17 @@ package Fakedsp.Data_Streams is
    -- the source ran out of data, End_Of_Stream is set to True, otherwise
    -- is set to False.
 
+   procedure Read
+     (Src           : in out Data_Source;
+      Sample        :    out Float;
+      End_Of_Stream :    out Boolean;
+      Channel       : in     Channel_Index := Channel_Index'First)
+   is abstract
+     with Pre'Class => Channel <= Src.Max_Channel;
+   -- Read one sample from a channel of the specified source. If
+   -- the source ran out of data, End_Of_Stream is set to True, otherwise
+   -- is set to False.
+
    function Sampling_Frequency (Src : Data_Source)
                                 return Frequency_Hz
                                 is abstract;
@@ -63,6 +74,11 @@ package Fakedsp.Data_Streams is
      with Pre'Class => Channel <= Dst.Max_Channel;
    -- Write a sample to the destination
 
+   procedure Write (Dst     : Data_Destination;
+                    Sample  : Float;
+                    Channel : Channel_Index := Channel_Index'First)
+   is abstract
+     with Pre'Class => Channel <= Dst.Max_Channel;
 
    function Max_Channel (Src : Data_Destination)
                          return Channel_Index

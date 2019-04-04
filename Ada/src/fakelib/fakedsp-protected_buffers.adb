@@ -45,7 +45,7 @@ package body Fakedsp.Protected_Buffers is
       -- Put --
       ---------
 
-      procedure Put (Item : Sample_Array)
+      procedure Put (Item : Float_Array)
       is
       begin
          Buffer := Item;
@@ -54,7 +54,7 @@ package body Fakedsp.Protected_Buffers is
       function Length return Positive
       is (Size);
 
-      function Get return Sample_Array
+      function Get return Float_Array
       is
       begin
          return Buffer;

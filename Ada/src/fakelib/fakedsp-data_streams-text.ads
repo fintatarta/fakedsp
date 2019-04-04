@@ -14,6 +14,11 @@ package Fakedsp.Data_Streams.Text is
                    End_Of_Stream : out Boolean;
                    Channel       : Channel_Index := Channel_Index'First);
 
+   procedure Read (Src           : in out Text_Source;
+                   Sample        : out Float;
+                   End_Of_Stream : out Boolean;
+                   Channel       : Channel_Index := Channel_Index'First);
+
    function Sampling_Frequency (Src : Text_Source)
                                 return Frequency_Hz;
 
@@ -39,6 +44,10 @@ package Fakedsp.Data_Streams.Text is
                     Sample  : Sample_Type;
                     Channel : Channel_Index := Channel_Index'First);
 
+   procedure Write (Dst     : Text_Destination;
+                    Sample  : Float;
+                    Channel : Channel_Index := Channel_Index'First);
+
    procedure Close (Dst : in out Text_Destination);
 
    function Max_Channel (Src : Text_Destination) return Channel_Index;
@@ -51,7 +60,7 @@ private
 
    Standard_IO_Name     : constant String (1 .. 1) := (1 => ASCII.NUL);
 
-
+   type Data_Format is (Float_Format, Sample_Format);
 
    type Text_Source is  limited new Data_Source
    with
@@ -59,8 +68,9 @@ private
          File           : Hybrid_File;
          Top_Channel    : Channel_Index;
          Frequency      : Frequency_Hz;
-         Current_Sample : Sample_Type;
+         Current_Sample : Float;
          Empty          : Boolean;
+         Format         : Data_Format;
       end record;
 
    function Sampling_Frequency (Src : Text_Source) return Frequency_Hz
@@ -75,9 +85,10 @@ private
 
    type Text_Destination is limited new Data_Destination with
       record
-         File        : Hybrid_File;
-         Top_Channel : Channel_Index;
-         Frequency   : Frequency_Hz;
+         File           : Hybrid_File;
+         Top_Channel    : Channel_Index;
+         Frequency      : Frequency_Hz;
+         Format         : Data_Format;
       end record;
 
 

@@ -5,7 +5,7 @@ with Fakedsp.Background_Tasks;
 with Utilities.Task_Reaper;
 
 package body Fakedsp.Card is
-
+   use Protected_Buffers;
 
 
 
@@ -13,32 +13,56 @@ package body Fakedsp.Card is
    Out_Buffer : Protected_Buffers.Sample_Buffer_Access := null;
 
 
+   function ADC_DMA_Size return Positive
+   is (In_Buffer.Size);
+
+   function DAC_DMA_Size return Positive
+   is (Out_Buffer.Size);
+
    --------------
    -- Read_ADC --
    --------------
 
    function Read_ADC return Sample_Array is
+      Tmp : constant Float_Array := In_Buffer.Get;
+      Result : Sample_Array (Tmp'Range);
    begin
-      return In_Buffer.Get;
+      for I in Tmp'Range loop
+         Result (I) := Sample_Type (Tmp (I));
+      end loop;
+
+      return Result;
    end Read_ADC;
 
    --------------
    -- Read_ADC --
    --------------
 
-   function Read_ADC return Sample_Type is
-      Tmp : constant Sample_Array (1 .. 1) := Read_ADC;
+   function Read_ADC return Float is
+      Tmp : constant Float_Array (1 .. 1) := In_Buffer.Get;
    begin
       return Tmp (1);
    end Read_ADC;
+
+   --------------
+   -- Read_ADC --
+   --------------
+
+   function Read_ADC return Sample_Type
+   is (Sample_Type (Float'(Read_ADC)));
 
    ---------------
    -- Write_Dac --
    ---------------
 
    procedure Write_Dac (Data : Sample_Array) is
+      Tmp : Float_Array (Data'Range);
    begin
-      Out_Buffer.Put (Data);
+      for I in Tmp'Range loop
+         Tmp (I) := Float (Data (I));
+      end loop;
+
+      Out_Buffer.Put (Tmp);
    end Write_Dac;
 
    ---------------
@@ -46,9 +70,18 @@ package body Fakedsp.Card is
    ---------------
 
    procedure Write_Dac (Data : Sample_Type) is
-      Tmp : constant Sample_Array (1 .. 1) := (1 => Data);
    begin
-      Write_Dac (Tmp);
+      Write_Dac (Float (Data));
+   end Write_Dac;
+
+   ---------------
+   -- Write_Dac --
+   ---------------
+
+   procedure Write_Dac (Data : Float) is
+      Tmp : constant Float_Array (1 .. 1) := (1 => Data);
+   begin
+      Out_Buffer.Put (Tmp);
    end Write_Dac;
 
 

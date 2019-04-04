@@ -12,13 +12,13 @@ package body Fakedsp.Background_Tasks is
 
       task Reader  is
          entry Read_From (Source : in Data_Source_Access);
-         entry Get (Item : out Sample_Type;
+         entry Get (Item : out Float;
                     Eof  : out Boolean);
       end Reader;
 
       task body Reader
       is
-         Sample   : Sample_Type;
+         Sample   : Float;
          Input    : Data_Source_Access;
          End_Of_Data : Boolean;
       begin
@@ -36,7 +36,7 @@ package body Fakedsp.Background_Tasks is
             Input.Read (Sample, End_Of_Data);
 
             select
-               accept Get (Item : out Sample_Type; Eof : out Boolean) do
+               accept Get (Item : out Float; Eof : out Boolean) do
                   Item := Sample;
                   Eof := End_Of_Data;
                end Get;
@@ -48,12 +48,12 @@ package body Fakedsp.Background_Tasks is
 
       task Writer is
          entry Write_To (Dst : Data_Destination_Access);
-         entry Put (Item :  Sample_Type);
+         entry Put (Item :  Float);
       end Writer;
 
       task body Writer is
          Output : Data_Destination_Access;
-         Sample : Sample_Type;
+         Sample : Float;
       begin
          select
             accept Write_To (Dst : in Data_Destination_Access) do
@@ -65,7 +65,7 @@ package body Fakedsp.Background_Tasks is
 
          loop
             select
-               accept Put (Item : in Sample_Type) do
+               accept Put (Item : in Float) do
                   Sample := Item;
                end Put;
             or
@@ -104,8 +104,8 @@ package body Fakedsp.Background_Tasks is
       end select;
 --        Put_Line ("T=" & Sampling_Period'Img);
       declare
-         In_Buffer  : Sample_Array (1 .. Shared_In_Buffer.Length);
-         Out_Buffer : Sample_Array (1 .. Shared_Out_Buffer.Length);
+         In_Buffer  : Protected_Buffers.float_Array (1 .. Shared_In_Buffer.Length);
+         Out_Buffer : Protected_Buffers.float_Array (1 .. Shared_Out_Buffer.Length);
          In_Cursor  : Positive := In_Buffer'First;
          Out_Cursor : Positive := Out_Buffer'First;
          Eof        : Boolean;
