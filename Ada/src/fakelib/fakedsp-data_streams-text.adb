@@ -7,7 +7,19 @@ package body Fakedsp.Data_Streams.Text is
 
    Sampling_Frequency_Key : constant String := "Fs";
 
+   function Get_Format (Options : Option_List) return Data_Format
+   is
+      use Option_Lists.Option_Maps;
 
+      Pos : constant Cursor := Find (Options, "fmt");
+   begin
+      if Pos /= No_Element and then Element (Pos) = "float" then
+         return Float_Format;
+
+      else
+         return Sample_Format;
+      end if;
+   end Get_Format;
    ----------
    -- Open --
    ----------
@@ -197,13 +209,12 @@ package body Fakedsp.Data_Streams.Text is
       Options      : Option_Lists.Option_List := Option_Lists.Empty_List)
       return Text_Destination_Access
    is
-      pragma Unreferenced (Options);
 
       Result : constant Text_Destination_Access :=
                  new Text_Destination'(File           => <>,
                                        Top_Channel    => Last_Channel,
                                        Frequency      => Sampling,
-                                       Format         => Sample_Format);
+                                       Format         => Get_Format (Options));
 
    begin
       if Filename = Standard_IO_Name then
