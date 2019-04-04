@@ -1,7 +1,5 @@
---  @summary
---  Root of the library
---
---  @description
+--****p*  Fakedsp/Fakedsp
+-- DESCRIPTION
 --  The library fakedsp allows  to write code with a DSP-style on a normal PC.
 --  I wrote this to help my students in doing their lab activities.
 --
@@ -13,7 +11,7 @@
 --  that implement the Data_Source/Data_Destination interfaces
 --  (defined in Fakedsp.Data_Streams) that represent the main abstraction
 --  for data I/O.
---
+--***
 package Fakedsp is
    -- Number of bits of the sample read from the ADC/written to the DAC
    Sample_Size : constant := 16;

@@ -1,0 +1,191 @@
+#
+# $Id: robodoc_example.rc,v 1.1 2008/06/17 11:49:26 gumpu Exp $
+#
+# Example robodoc.rc file.
+#
+options:
+    --doc doc/html
+    --one_file_per_header
+    --src src/fakelib/
+    --html
+    --multidoc
+    --documenttitle "FakeDSP API"
+    --index
+    --tabsize 8
+    --nopre
+    --sections
+    --ignore_case_when_linking
+    --syntaxcolors
+source items:
+    SYNOPSIS
+items:
+    SOURCE
+    NAME
+    COPYRIGHT
+    SYNOPSIS
+    USAGE
+    FUNCTION
+    DESCRIPTION
+    PURPOSE
+    AUTHOR
+    CREATION DATE
+    MODIFICATION HISTORY
+    HISTORY
+    INPUTS
+    INPUT
+    ARGUMENTS
+    OPTIONS
+    PARAMETERS
+    SWITCHES
+    OUTPUT
+    SIDE EFFECTS
+    RESULTS
+    RESULT
+    RETURN VALUE
+    EXAMPLE
+    NOTE
+    NOTES
+    DIAGNOSTICS
+    WARNINGS
+    ERRORS
+    BUGS
+    TODO
+    IDEAS
+    PORTABILITY
+    SEE ALSO
+    METHODS
+    NEW METHODS
+    ATTRIBUTES
+    NEW ATTRIBUTES
+    TAGS
+    COMMANDS
+    DERIVED FROM
+    DERIVED BY
+    USES
+    CHILDREN
+    USED BY
+    PARENTS
+keywords:
+    abort
+    abs
+    abstract 
+    accept
+    access
+    aliased 
+    all
+    and
+    array
+    at
+    begin
+    body
+    case
+    constant
+    declare
+    delay
+    delta
+    digits
+    do
+    else
+    elsif
+    end
+    entry
+    exception
+    exit
+    for
+    function
+    generic
+    goto
+    if
+    in
+    interface 
+    is
+    limited
+    loop
+    mod
+    new
+    not
+    null 		
+    of
+    or
+    others
+    out
+    overriding
+    package
+    pragma
+    private
+    procedure
+    protected
+    raise
+    range 		
+    record
+    rem
+    renames
+    requeue
+    return 	
+    reverse 	
+    select 	
+    separate 	
+    some 
+    subtype 	
+    synchronized
+    tagged 
+    task 	
+    terminate 	
+    then 	
+    type 	
+    until
+    use 	
+    when 	
+    while 	
+    with 	
+    xor
+ignore items:
+    HISTORY
+headertypes:
+    p  Packages robo_packages
+    u  Unittests robo_unittest
+    x  "System tests"  robo_sys_tests
+    e  "Makefile entries"  robo_mk_entries
+ignore files:
+    t
+    makefile.am
+    README
+    CVS
+    Doc
+    Doc1
+    Doc2
+    Doc3
+    FileFilterSrc
+    FileFilterSrc_2
+    RoboHeaders
+    Scr1
+    Scr2
+    SortSource
+    *.dat
+    *.html
+    *.rc
+    late*
+    troff*
+    sgml*
+    *.css
+    *.refs
+    *.in
+    *.txt
+    *~
+    *.stderr
+    Scr1
+    Scr2
+    Doc1
+    Doc2
+    SortSource
+    RoboHeaders
+    FileFilterSrc
+accept files:
+    fakedsp*.ads
+remark begin markers:
+    --****
+remark end markers:
+    --***
+source line comments:
+    --
+
