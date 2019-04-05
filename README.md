@@ -3,6 +3,10 @@ This repository contains two small libraries (in C and Ada) that I wrote for my 
 
 The goal of this library is to allow the students to write software with the same "style" that they would use to write software running on a DSP, but working on a PC.  This started as a tool to be used to do debugging in a more forgiving environment (a PC) than a DSP running in real time.  It can be used to introduce students to writing code in DSP-style, that is, processing samples as they arrive, without having the whole signal stored in a vector (like, for example, in Matlab/octave).
 
+# How do I install the software?
+
+As said above, 
+
 # How do I use this?
 
 Both the C and Ada version share the same model, the details about how they are used differ a bit and are documented separately  The library simulates a DSP card with an ADC, a DAC and a processor that it receives an interrupt every time a new sample is ready. The virtual ADC reads its data from an external source represented by a file (WAV and text-based files are currently accepted), the virtual DAC writes on a destination (again a file).
