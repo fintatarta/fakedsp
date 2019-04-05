@@ -3,7 +3,23 @@ with Utilities.Option_Lists;
 
 use Utilities;
 use Utilities.Option_Lists;
-
+--****P* Data_Streams/Text
+-- DESCRIPTION
+--   This package provides a concrete implementation of interfaces
+--   Data_Source and Data_Destination that do I/O in text format.  Although
+--   not very efficient on the space occupation side, it is convenient
+--   for backup etc.
+--
+-- OPTIONS
+--   It accepts option "fmt" that if equal to "float" force I/O in
+--   floating point format, otherwise signed 16  bit integers are used.
+--
+--   For example,
+--
+--   |html <center><code>-::fmt=float</code></center>
+--
+--   do I/O with floating point numbers to standard input/standard output
+--***
 package Fakedsp.Data_Streams.Text is
    type Text_Source is  limited new Data_Source with private;
    type Text_Source_Access is access Text_Source;
