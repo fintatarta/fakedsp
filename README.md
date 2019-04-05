@@ -5,7 +5,19 @@ The goal of this library is to allow the students to write software with the sam
 
 # How do I install the software?
 
-As said above, 
+As said above, this package includes two libraries: one in C, the other in Ada.  
+
+* If you want to install the **C** library
+    * Just copy the content of directory *C/* where your compiler will find it. 
+    * Include "fakedsk.h" in your code
+    * Link your code together  with all the C files that are in the directory
+    * If you want a slightly more efficient approach, you can create a library to be linked with your code. See the documentation in the *C/* directory for details
+* If you want to install the **Ada** library, 
+  * Use one of the following two possible installation procedures
+    1. Copy the content of *Ada/src/fakelib* where your compiler can find it, or, 
+    1. If you use `gprbuild` (distributed with the Adacore suite) then copy the **whole** *Ada/* directory somewhere and `with` the file `fakedsp.gpr` in your project file
+  * In both cases you'll use in your code the resources provided by packages `fakedsp`, `fakedsp.card` and `fakedsp.data_streams.files`
+  * See also the documentation in *Ada/doc/html*
 
 # How do I use this?
 
