@@ -16,10 +16,21 @@
 --   will be read from a file and the DAC samples will be written to
 --   a file.
 --
+-- INSTALLING
+--
+--    The installation is very simple: just put the content of directory 
+--    |html <code>fakelib/src</code> where your compiler will find it
+--    and that's it!  If you use the Adacore project manager
+--    |html <code>gprbuild</code>, just place the whole 
+--    |html <code>Ada</code> directory somewhere and
+--    |html <code>with</code> project 
+--    |html <code>fakedsp.gpr</code> inside your 
+--    |html <code>gpr</code> file.
+--
 -- HOW DO I USE IT?
 --
 --  The typical workflow is the following:
---  * Write the virtual interrupt handler (that, remember, will do the 
+--  * Code the virtual interrupt handler (that, remember, will do the 
 --    processing) by creating a 
 --    |html <i>concrete version</i> of the interface Callback_Handler
 --    defined in the package Fakedsp.Card.
@@ -31,17 +42,6 @@
 --    Fakedsp.Card  The code, behind the scenes,  will get the data
 --    from the Data_Source, send results to the Data_Destination and call
 --    your handler
---
--- INSTALLING
---
---    The installation is very simple: just put the content of directory 
---    |html <code>fakelib/src</code> where your compiler will find it
---    and that's it!  If you use the Adacore project manager
---    |html <code>gprbuild</code>, just place the whole 
---    |html <code>Ada</code> directory somewhere and
---    |html <code>with</code> project 
---    |html <code>fakedsp.gpr</code> inside your 
---    |html <code>gpr</code> file.
 --
 -- EXAMPLE
 --
@@ -88,12 +88,16 @@
 --   |html <li><a href="https://www.adaic.org/learn/materials/">Adaic</a> 
 --   This is a meta-resource, it is a site with lots of 
 --   links to learning material, libraries, tools, and so on...
---   |html <li><a href="https://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html">RM</a>.
+--   |html <li><a href="https://en.wikibooks.org/wiki/Ada_Programming">The wikibook</a> Not 100% complete, but mostly.
+--   It is writte in a very readable style and it can be a good reference
+--   resource at least until you do not get used to... (drum roll)
+--   |html <li>... <a href="https://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html">The Reference Manual</a>!
 --   It is not possible not to mention the
 --   (in)famous and
---   fundamental **Reference Manual**. This is the standard ISO
+--   fundamental
+--   |html <b>Reference Manual</b>. This is the standard ISO
 --   describing the language, it is written in "computer science
---   legalese" and if it was a bit more obscure it would seem
+--   legalese" and if it was just a bit more obscure it would seem
 --   encrypted. :-) Seriously, this is the ultimate resource to know
 --   about Ada, although you need to get used to it.  The annotated
 --   version and the corresponding "Rationale" (that you can find on the
@@ -108,13 +112,17 @@
 --   that there is also an IRC channel, but I am not an IRC user.
 --   |html </ul>
 --   
---   You can download open source IDE, compilers, and so on... from the [Adacore]:https://www.adacore.com/download [Adacore] site.  
+--   You can download open source IDE, compilers, and so on... from the
+--   |html <a href="https://www.adacore.com/download">Adacore</a> site.  
 --   
 --   Oh, yes, if you come definitively to the dark side and want to meet
---   with other Adaists, keep an eye on the [FOSDEM]:https://fosdem.org/
---   the Free and Open Source Developers European Meeting, hold yearly in
---   Bruxells.  Often in the program there is the *Ada dev room* with
---   interesting talks and introductions for beginners.  Some past Editions:
+--   with other Adaists, keep an eye on the
+--   |html <a href="https://fosdem.org/">FOSDEM</a>
+--   the
+--   |html <i>Free and Open Source Developers European Meeting</i>, held yearly in
+--   Bruxells.  Often in the program there is the
+--   |html <i>Ada dev room</i> with
+--   interesting talks and introductions for beginners.  Some past editions:
 --   * 2019: href:https://fosdem.org/2019/schedule/track/ada/
 --   * 2018: href:https://archive.fosdem.org/2018/schedule/track/ada/ 
 --   * 2016: href:https://archive.fosdem.org/2016/schedule/track/ada/ 
