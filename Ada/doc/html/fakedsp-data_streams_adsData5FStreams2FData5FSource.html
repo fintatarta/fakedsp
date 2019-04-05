@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="./robodoc.css" type="text/css" />
+<title>./src/fakelib/fakedsp-data_streams.ads</title>
+<!-- Source: ./src/fakelib/fakedsp-data_streams.ads -->
+<!-- Generated with ROBODoc Version 4.99.43 (Apr  5 2019) -->
+</head>
+<body>
+<div id="logo">
+<a name="robo_top_of_doc">FakeDSP API</a>
+</div> <!-- logo -->
+<div id="navigation">
+<a class="menuitem" href="./fakedsp-data_streams_adsFakedsp2FData5FStreams.html#robo21">Data_Streams</a><a class="menuitem" href="./robo_interfaces.html#robo_top_of_doc">Abstract Interfaces</a></div> <!-- navigation -->
+<div id="content">
+<hr />
+<a name="Data5fStreams2fData5fSource"></a>
+<a name="robo9"></a><h2>Data_Streams/Data_Source [ Abstract Interfaces ]</h2>
+
+<p class="item_name">SOURCE</p>
+<pre class="source">   <span class="keyword">type</span> <strong>Data_Source</strong> <span class="keyword">is</span> <span class="keyword">limited</span> <span class="keyword">interface</span><span class="sign">;</span>
+
+   <span class="keyword">type</span> Data_Source_Access <span class="keyword">is</span> <span class="keyword">access</span> <span class="keyword">all</span> <strong>Data_Source</strong><span class="squote">'Class;
+</pre>
+<p class="item_name">DESCRIPTION</p>
+<p>   Abstract interface representing the generic data source.
+   A concrete implementation of this interface needs to define:
+</p>
+<ul><li>   procedure <a href="./fakedsp-data_streams_adsData5FSource2FRead.html#robo6">Read</a> to get the next sample
+</li>
+<li>   function <a href="./fakedsp-data_streams_adsData5FSource2FSampling5FFrequency.html#robo7">Sampling_Frequency</a> that returns the
+     sampling frequency of the source
+</li>
+<li>   function <a href="./fakedsp-data_streams_adsData5FSource2FMax5FChannel.html#robo5">Max_Channel</a> returning the number of the
+     last channel
+</li>
+<li>   procedure <a href="./fakedsp-data_streams_adsData5FSource2FClose.html#robo4">Close</a> that... <a href="./fakedsp-data_streams_adsData5FSource2FClose.html#robo4">Close</a> the source.
+</li>
+</ul>
+<p></p>
+
+</div> <!-- content -->
+<div id="footer">
+<p>Generated from ./src/fakelib/fakedsp-data_streams.ads with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.43 on Fri Apr 05 2019 16:55:37
+</p>
+</div> <!-- footer -->
+</body>
+</html>

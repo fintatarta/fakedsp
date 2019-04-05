@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="./robodoc.css" type="text/css" />
+<title>./src/fakelib/rootdoc.doc</title>
+<!-- Source: ./src/fakelib/rootdoc.doc -->
+<!-- Generated with ROBODoc Version 4.99.43 (Apr  5 2019) -->
+</head>
+<body>
+<div id="logo">
+<a name="robo_top_of_doc">FakeDSP API</a>
+</div> <!-- logo -->
+<div id="navigation">
+<a class="menuitem" href="./robo_root.html#robo_top_of_doc">Documentation root</a></div> <!-- navigation -->
+<div id="content">
+<hr />
+<a name="Root2fFakedsp"></a>
+<a name="robo29"></a><h2>Root/Fakedsp [ Documentation root ]</h2>
+
+<p class="item_name">WHAT IS THIS?</p>
+<p>   This is the Ada version of the <strong>Fakedsp</strong> library. The library provides
+   the equivalent of a virtual card with an ADC and a DAC.  The ADC
+   acquires samples at a given sampling frequency and every time 
+   a sample is ready a 
+<i>virtual interrupt handler</i> (written by the user) is called.   
+   At the same time the DAC updates its output.
+</p>
+
+<p>   The signal processing is typically carried out inside the virtual
+   interrupt handler.  The virtual handler can get the samples 
+   produced by the ADC by using the function <a href="./fakedsp-card_adsFakedsp2Ecard2FRead5FADC.html#robo16">Read_ADC</a> and send the 
+   processed data to the DAC by using the procedure <a href="./fakedsp-card_adsFakedsp2Ecard2FWrite5FDAC.html#robo20">Write_DAC</a>.
+</p>
+
+<p>   Of course, the ADC and DAC are not real; therefore, the ADC samples
+   will be <a href="./fakedsp-data_streams_adsData5FSource2FRead.html#robo6">Read</a> from a file and the DAC samples will be written to
+   a file.
+</p>
+<p class="item_name">INSTALLING</p>
+<p>    The installation is very simple: just put the content of directory 
+<code>fakelib/src</code> where your compiler will find it
+    and that's it!  If you use the Adacore project manager
+<code>gprbuild</code>, just place the whole 
+<code>Ada</code> directory somewhere and
+<code>with</code> project 
+<code>fakedsp.gpr</code> inside your 
+<code>gpr</code> file.
+</p>
+<p class="item_name">HOW DO I USE IT?</p>
+<p>  The typical workflow is the following:
+</p>
+<ul><li>  Code the virtual interrupt handler (that, remember, will do the 
+    processing) by creating a 
+<i>concrete version</i> of the interface Callback_Handler
+    defined in the package <a href="./fakedsp-card_adsFakedsp2FFakedsp2Ecard.html#robo23">Fakedsp.card</a>.
+</li>
+<li>  Create a <a href="./fakedsp-data_streams_adsData5FStreams2FData5FSource.html#robo9">Data_Source</a> and a <a href="./fakedsp-data_streams_adsData5FStreams2FData5FDestination.html#robo8">Data_Destination</a> that will be used, 
+    respecitvely, from the ADC and the DAC for sample I/O.  The easiest
+    way to do this is to use the opening functions provided by 
+    the package <a href="./fakedsp-data_streams-files_adsData5FStreams2FFiles.html#robo10">Files</a>
+</li>
+<li>  Turn on the virtual card by calling the procedure <a href="./fakedsp-card_adsFakedsp2Ecard2FStart.html#robo17">Start</a> in 
+    <a href="./fakedsp-card_adsFakedsp2FFakedsp2Ecard.html#robo23">Fakedsp.card</a>  The code, behind the scenes,  will get the data
+    from the <a href="./fakedsp-data_streams_adsData5FStreams2FData5FSource.html#robo9">Data_Source</a>, send results to the <a href="./fakedsp-data_streams_adsData5FStreams2FData5FDestination.html#robo8">Data_Destination</a> and call
+    your handler
+</li>
+</ul>
+<p></p>
+<p class="item_name">EXAMPLE</p>
+<p>   You can find examples in the directory src/examples.  Currently there
+   is only one example, namely an example of processing with a notch filter.
+   Maybe more examples will be added in the future. This example can be
+   used as a starting point for your own processing code.
+</p>
+<p class="item_name">SEE ALSO</p>
+<p>   In the usual spirit of Ada, a detailed (enough) description of 
+   the interface of the different packages is embedded directly
+   in the spec file (extension
+<code>.ads</code>).  
+</p>
+<p class="item_name">NOTES</p>
+<h3>But I do not know Ada!</h3>
+<p></p>
+
+<p>   Well, you can learn... :-)
+</p>
+
+<p>   I think that Ada is a very nice and modern language that helps you
+   writing very robust software easily and in short time. Debugging times
+   are typically 10% of the debugging time of C. (Note: 10% of..,
+   not 10% smaller...) I abandoned C since I learned Ada.
+</p>
+   
+<p>   A main issue with Ada is that is it is not widely known 
+   and there is not much material to learn it.  Nevertheless, there 
+   are few very good resources
+</p>
+
+<p><ul>
+<li><a href="https://dwheeler.com/lovelace/lovelace.htm">Ada 95 Tutorial</a> This is an old tutorial (with excercises) about Ada 95.  I
+   learned Ada with this.  Ada 95 is a fairly old version of Ada (now we
+   are at Ada 2012) and many new features are missing, but it is a good
+   introduction to the language.  If you are new to the language,
+   breaking the ground with this can be a good idea.
+<li><a href="https://learn.adacore.com">Adacore</a> 
+   Adacore is the
+   producer of GNAT, the gcc frontend for Ada. In this site you can find
+   an introduction to Ada and an introduction to SPARK (a subset of Ada
+   suitable for formal checking, nothing to do with Apache...).  I did
+   not use them, but they look nice (and relative to more modern Ada
+   versions)
+<li><a href="https://www.adaic.org/learn/materials/">Adaic</a> 
+   This is a meta-resource, it is a site with lots of 
+   links to learning material, libraries, tools, and so on...
+<li><a href="https://en.wikibooks.org/wiki/Ada_Programming">The wikibook</a> Not 100% complete, but mostly.
+   It is writte in a very readable style and it can be a good reference
+   resource at least until you do not get used to... (drum roll)
+<li>... <a href="https://www.adaic.org/resources/add_content/standards/12rm/html/RM-TOC.html">The Reference Manual</a>!
+   It is not possible not to mention the
+   (in)famous and
+   fundamental
+<b>Reference Manual</b>. This is the standard ISO
+   describing the language, it is written in "computer science
+   legalese" and if it was just a bit more obscure it would seem
+   encrypted. :-) Seriously, this is the ultimate resource to know
+   about Ada, although you need to get used to it.  The annotated
+   version and the corresponding "Rationale" (that you can find on the
+   Adaic site) often can help since they do not need to be as formal as
+   the reference <a href="./fakedsp-data_streams-text_adsData5FStreams2FText.html#robo11">Text</a>.
+<li>There is also the newsgroup (yes! they are still alive!)
+<code>comp.lang.ada</code> quite active, with a good
+   signal to noise ratio
+   and many people wiling to help beginners (although you must be nice
+   too... this goes without saying...).  There is also a LinkedIn
+   group, but it is less active and more for announcements etc. I know
+   that there is also an IRC channel, but I am not an IRC user.
+</ul>
+</p>
+   
+<p>   You can download open source IDE, compilers, and so on... from the
+<a href="https://www.adacore.com/download">Adacore</a> site.  
+</p>
+   
+<p>   Oh, yes, if you come definitively to the dark side and want to meet
+   with other Adaists, keep an eye on the
+<a href="https://fosdem.org/">FOSDEM</a>
+   the
+<i>Free and Open Source Developers European Meeting</i>, held yearly in
+   Bruxells.  Often in the program there is the
+<i>Ada dev room</i> with
+   interesting talks and introductions for beginners.  Some past editions:
+</p>
+<ul><li>   2019: <a href="https://fosdem.org/2019/schedule/track/ada/">https://fosdem.org/2019/schedule/track/ada/</a>
+</li>
+<li>   2018: <a href="https://archive.fosdem.org/2018/schedule/track/ada/">https://archive.fosdem.org/2018/schedule/track/ada/</a> 
+</li>
+<li>   2016: <a href="https://archive.fosdem.org/2016/schedule/track/ada/">https://archive.fosdem.org/2016/schedule/track/ada/</a> 
+</li>
+</ul>
+<p></p>
+
+</div> <!-- content -->
+<div id="footer">
+<p>Generated from ./src/fakelib/rootdoc.doc with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.43 on Fri Apr 05 2019 16:55:37
+</p>
+</div> <!-- footer -->
+</body>
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="./robodoc.css" type="text/css" />
+<title>./src/fakelib/fakedsp-card.ads</title>
+<!-- Source: ./src/fakelib/fakedsp-card.ads -->
+<!-- Generated with ROBODoc Version 4.99.43 (Apr  5 2019) -->
+</head>
+<body>
+<div id="logo">
+<a name="robo_top_of_doc">FakeDSP API</a>
+</div> <!-- logo -->
+<div id="navigation">
+<a class="menuitem" href="./fakedsp-card_adsFakedsp2FFakedsp2Ecard.html#robo23">Fakedsp.card</a><a class="menuitem" href="./robo_methods.html#robo_top_of_doc">Methods</a></div> <!-- navigation -->
+<div id="content">
+<hr />
+<a name="Fakedsp2ecard2fStart"></a>
+<a name="robo17"></a><h2>Fakedsp.card/Start [ Methods ]</h2>
+
+<p class="item_name">SOURCE</p>
+<pre class="source">   <span class="keyword">procedure</span> <strong>Start</strong> <span class="sign">(</span>Callback        <span class="sign">:</span> <a href="./fakedsp-card_adsFakedsp2Ecard2FCallback5FHandler5FAccess.html#robo14">Callback_Handler_Access</a><span class="sign">;</span>
+                    Input           <span class="sign">:</span> <a href="./fakedsp-data_streams_adsFakedsp2FData5FStreams.html#robo21">Data_Streams</a><span class="sign">.</span>Data_Source_Access<span class="sign">;</span>
+                    Output          <span class="sign">:</span> <a href="./fakedsp-data_streams_adsFakedsp2FData5FStreams.html#robo21">Data_Streams</a><span class="sign">.</span>Data_Destination_Access<span class="sign">;</span>
+                    In_Buffer_Size  <span class="sign">:</span> Positive <span class="sign">:</span><span class="sign">=</span> 1<span class="sign">;</span>
+                    Out_Buffer_Size <span class="sign">:</span> Positive <span class="sign">:</span><span class="sign">=</span> 1<span class="sign">)</span>
+     <span class="keyword">with</span>
+       Pre <span class="sign">=</span><span class="sign">&gt;</span> <a href="./fakedsp-card_adsFakedsp2Ecard2FCurrent5FState.html#robo15">Current_State</a> <span class="sign">=</span> Sleeping<span class="sign">,</span>
+       Post <span class="sign">=</span><span class="sign">&gt;</span> 
+         <a href="./fakedsp-card_adsFakedsp2Ecard2FCurrent5FState.html#robo15">Current_State</a> <span class="sign">=</span> Running
+         <span class="keyword">and</span> <a href="./fakedsp-card_adsFakedsp2Ecard2FADC5FDMA5FSize.html#robo12">ADC_DMA_Size</a> <span class="sign">=</span> In_Buffer_Size
+         <span class="keyword">and</span> <a href="./fakedsp-card_adsFakedsp2Ecard2FADC5FDMA5FSize.html#robo12">DAC_DMA_Size</a> <span class="sign">=</span> Out_Buffer_Size<span class="sign">;</span>
+</pre>
+<p class="item_name">DESCRIPTION</p>
+<p>   Turn on the "virtual acquisition card."  Data will be <a href="./fakedsp-data_streams_adsData5FSource2FRead.html#robo6">Read</a> from the
+   input source Input and written to Output.  Data can be <a href="./fakedsp-data_streams_adsData5FSource2FRead.html#robo6">Read</a>/<a href="./fakedsp-data_streams_adsData5FDestination2FWrite.html#robo3">Write</a>
+   sample by sample or blockwise (simulating a kind of DMA).  The size
+   of an input/output block (in samples) is specified by In_Buffer_Size
+   and Out_Buffer_Size.
+</p>
+   
+<p>   Samples are <a href="./fakedsp-data_streams_adsData5FSource2FRead.html#robo6">Read</a> from the source at the sampling frequency determined
+   by the data source.
+</p>
+<p class="item_name">NOTES</p>
+<p>   So far I tested it only for In_Buffer_Size=1 and Out_Buffer_Size=1.
+   The more general case most probably works, but it is untested.
+</p>
+
+</div> <!-- content -->
+<div id="footer">
+<p>Generated from ./src/fakelib/fakedsp-card.ads with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.43 on Fri Apr 05 2019 16:55:37
+</p>
+</div> <!-- footer -->
+</body>
+</html>

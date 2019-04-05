@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="./robodoc.css" type="text/css" />
+<title>./src/fakelib/fakedsp-card.ads</title>
+<!-- Source: ./src/fakelib/fakedsp-card.ads -->
+<!-- Generated with ROBODoc Version 4.99.43 (Apr  5 2019) -->
+</head>
+<body>
+<div id="logo">
+<a name="robo_top_of_doc">FakeDSP API</a>
+</div> <!-- logo -->
+<div id="navigation">
+<a class="menuitem" href="./fakedsp-card_adsFakedsp2FFakedsp2Ecard.html#robo23">Fakedsp.card</a><a class="menuitem" href="./robo_interfaces.html#robo_top_of_doc">Abstract Interfaces</a></div> <!-- navigation -->
+<div id="content">
+<hr />
+<a name="Fakedsp2ecard2fCallback5fHandler"></a>
+<a name="robo13"></a><h2>Fakedsp.card/Callback_Handler [ Abstract Interfaces ]</h2>
+
+<p class="item_name">SOURCE</p>
+<pre class="source">   type <strong>Callback_Handler</strong> is interface;
+   
+   procedure <a href="./fakedsp-card_adsCallback5FHandler2FSample5FReady.html#robo0">Sample_Ready</a> (H : in out <strong>Callback_Handler</strong>) is abstract;
+</pre>
+<p class="item_name">DESCRIPTION</p>
+<p>   A <strong>Callback_Handler</strong> defines an interface similar to that of 
+   an interrupt handler.
+</p>
+
+<p>   A concrete implementation of interface <strong>Callback_Handler</strong> is just 
+   required to define a procedure <a href="./fakedsp-card_adsCallback5FHandler2FSample5FReady.html#robo0">Sample_Ready</a> that
+   will be called when a new sample from the ADC is ready to be 
+   acquired.
+</p>
+
+<p>   Why an object rather than a simple callback?  Because an object
+   can carry a state.  For example, if the handler implements some
+   filter it needs to keep the past story of the signal and this
+   would be more cumbersome with a simple callback. 
+</p>
+
+</div> <!-- content -->
+<div id="footer">
+<p>Generated from ./src/fakelib/fakedsp-card.ads with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.43 on Fri Apr 05 2019 16:55:37
+</p>
+</div> <!-- footer -->
+</body>
+</html>
