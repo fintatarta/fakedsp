@@ -1,0 +1,72 @@
+% Document: ./src/fakelib/fakedsp-data_streams.ads
+% Source: ./src/fakelib/fakedsp-data_streams.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./rootdoc_docRoot2FFakedsp.tex#robo28">Fakedsp</a><a class="menuitem" href="./robo_packages.tex#robo_top_of_doc">Packages</a>\subsection{Fakedsp/Data\_Streams}
+\index{unsorted!Data\_Streams}\index{Packages!Data\_Streams}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+   Since the virtual card is not... a real one (really?) the samples
+   Read (\ref{ch:robo6}) by the ADC need to come from some external source and also
+   the samples sento to the virtual DAC need to be written somewehere.
+
+
+
+   The most obvious choice for said external source/destinations are
+   Files (\ref{ch:robo10}).  However, there are many possible format available such as
+   WAV, octave, pure text, and so on...  Moreover, the file could be a
+   file on disk or, in a Linux environment, the standard input/output or
+   a network connection or...
+
+
+
+   In order to not commit ourselves to a specific choice and allowing
+   for future expansions, the library introduces two abstract
+   interfaces that describe the minimum required to a data source/destination
+   and that can be specialized to specific formats. Currenty the library
+   provides implementations for WAV format and a text-based format
+   compatible with the octave text format.
+
+
+
+   The two interfaces defined in this package are:
+
+\begin{itemize}
+  \item    Data\_Source (\ref{ch:robo9}) are used to Read (\ref{ch:robo6}) data from (surprised?).
+  \item    Data\_Destination (\ref{ch:robo8}) used to Write (\ref{ch:robo3}) data (surprised again, I guess)
+\end{itemize}
+
+
+   Both Data\_Source (\ref{ch:robo9}) and Data\_Destination (\ref{ch:robo8}) have a sampling frequency
+   and one or more channels.  They can I/O both values of type
+   Sample\_Type (\ref{ch:robo24}) (closer to what actually happen with a real ADC/DAC)
+   or of type Float.  We decided of allowing saving Float values
+   since in some case we could want to post-process the output produced
+   by the processing without the additional noise due to the quantization
+   done in order to send data to the DAC.
+
+\textbf{NOTE:}\hspace{0.08in}
+   Currently most of the code is designed to work with a single channel
+   only.  Maybe this will change in the future.
+
+
+\end{document}

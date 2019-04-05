@@ -1,0 +1,50 @@
+% Document: ./src/fakelib/fakedsp-data_streams-files.ads
+% Source: ./src/fakelib/fakedsp-data_streams-files.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./fakedsp-data_streams-files_adsData5FStreams2FFiles.tex#robo10">Files</a><a class="menuitem" href="./robo_functions.tex#robo_top_of_doc">Functions</a>\subsection{Files/Open.Destination}
+\index{unsorted!Open.Destination}\index{Functions!Open.Destination}
+\textbf{SOURCE:}\hspace{0.08in}\begin{verbatim}
+   function Open (Filename     : String;
+                  Sampling     : Frequency_Hz;
+                  Format       : File_Type := Unknown;
+                  Last_Channel : Channel_Index := 1)
+                  return Data_Destination_Access
+     with Pre => Sampling /= Unspecified_Frequency;
+\end{verbatim}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+   Open a Data\_Destination (\ref{ch:robo8}) based on the file with the specified filename and
+   format (WAV, text-based, ...).   If the special
+   filename "-" is used, the standard output is used.
+
+
+
+   If Format = Unknown, then
+
+
+
+   * if Filename = "-", format Text\_File is used by default, otherwise
+   * the format is guessed on the basis of the extension.
+
+
+\end{document}

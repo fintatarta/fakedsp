@@ -1,0 +1,41 @@
+% Document: ./src/fakelib/fakedsp-data_streams-files.ads
+% Source: ./src/fakelib/fakedsp-data_streams-files.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./fakedsp-data_streams-files_adsData5FStreams2FFiles.tex#robo10">Files</a><a class="menuitem" href="./robo_types.tex#robo_top_of_doc">Types</a>\subsection{Files/File\_Type}
+\index{unsorted!File\_Type}\index{Types!File\_Type}
+\textbf{SOURCE:}\hspace{0.08in}\begin{verbatim}
+   type File_Type is (Wav_File, Text_File, Unknown);
+\end{verbatim}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+   Enumeration type representing the currently recognized format.
+   This type is here since we want to allow the user to specify
+   the format when the source/destination is open, without
+   any guessing on the library side.
+
+
+
+   It is a good idea to extend this type when a new format is added.
+
+
+\end{document}

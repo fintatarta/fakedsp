@@ -1,0 +1,64 @@
+% Document: ./src/fakelib/fakedsp-card.ads
+% Source: ./src/fakelib/fakedsp-card.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./rootdoc_docRoot2FFakedsp.tex#robo28">Fakedsp</a><a class="menuitem" href="./robo_packages.tex#robo_top_of_doc">Packages</a>\subsection{Fakedsp/Fakedsp.card}
+\index{unsorted!Fakedsp.card}\index{Packages!Fakedsp.card}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+  This package provides the interface to a "virtual DSP card" with an ADC
+  and a DAC. The virtual ADC reads sample at a specified sampling frequency
+  and at the same instants the virtual DAC updates its output. 
+  The user needs to register a "virtual interrupt handler"
+  that will be called every time the virtual ADC reads a new sample.
+  The interrupt handler can Read (\ref{ch:robo6}) data from the ADC using the function
+  Read\_ADC (\ref{ch:robo15}) and can Write (\ref{ch:robo3}) data to the DAC usign Write\_DAC (\ref{ch:robo19}).
+
+  
+
+  The interrupt handler must be a variable of a type that implements 
+  (is a descendant of) the interface Callback\_Handler (\ref{ch:robo12}).  Every
+  implementation of Callback\_Handler (\ref{ch:robo12}) must provide a procedure Sample\_Ready (\ref{ch:robo0})
+  that will be called after the virtual ADC acquired a new sample.
+
+
+
+  The typical way of using this package is as follows:
+
+\begin{itemize}
+  \item   The user codes an implementation of the interface Callback\_Handler (\ref{ch:robo12})
+    with the processing code (typically) included in the Sample\_Ready (\ref{ch:robo0}) 
+    procedure. 
+  \item   The user creates a Data\_Source (\ref{ch:robo9}) (see Fakedsp (\ref{ch:robo21}).Data\_Streams (\ref{ch:robo20})) that will 
+    be Read (\ref{ch:robo6}) by the virtual ADC in order to get the "virtually 
+    acquired" samples.  The easiest way to create a Data\_Source (\ref{ch:robo9}) is to 
+    use the "broker constructor" in Fakedsp (\ref{ch:robo21}).Data\_Streams (\ref{ch:robo20}).Files (\ref{ch:robo10}).
+  \item   The user creates a Data\_Destination (\ref{ch:robo8}) (see Fakedsp (\ref{ch:robo21}).Data\_Streams (\ref{ch:robo20})) that will 
+    be written by the virtual DAC with the value produced by the processing
+    code written by the user.  
+    The easiest way to create a Data\_Source (\ref{ch:robo9}) is to 
+    use the "broker constructor" in Fakedsp (\ref{ch:robo21}).Data\_Streams (\ref{ch:robo20}).Files (\ref{ch:robo10}).
+\end{itemize}
+
+
+
+\end{document}

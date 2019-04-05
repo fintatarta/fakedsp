@@ -1,0 +1,107 @@
+% Document: ./src/fakelib/fakedsp-data_streams-files.ads
+% Source: ./src/fakelib/fakedsp-data_streams-files.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./fakedsp-data_streams_adsFakedsp2FData5FStreams.tex#robo20">Data_Streams</a><a class="menuitem" href="./robo_packages.tex#robo_top_of_doc">Packages</a>\subsection{Data\_Streams/Files}
+\index{unsorted!Files}\index{Packages!Files}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+    The user can use as data stream for sample I/O Files with different
+    format.  Every implemented format corresponds to a different implementation
+    of the Data\_Source (\ref{ch:robo9}) or Data\_Destination (\ref{ch:robo8}) interface defined in the package
+    Data\_Streams (\ref{ch:robo20}).
+
+
+
+    In order to make it easier to manage different format at runtime,
+    this package acts as a kind of "broker" that recognizes the format
+    and create the correct object to handle it.
+
+
+
+    The interface of this package is really simple: it provides two
+    Open functions (Open.Source (\ref{ch:robo27}) and Open.Destination (\ref{ch:robo26})) that look
+    at the filename to guess the format if this is not explicitely
+    specified by the user.  If given the special filename the opening
+    functions use the standard input/output.
+
+
+
+
+
+
+    Sometimes it is necessary to give to the procedure opening the
+    source/destination some information that cannot be found in the
+    file itself.  For example, if the file is just a raw sequence
+    of samples, it is not possible to Read (\ref{ch:robo6}) from it the sampling
+    frequency.  As another example, when we open a data destination
+    that can accept both Sample\_Type (\ref{ch:robo24}) and Float formats, we cannot know
+    which format the user desires.
+
+
+
+    In order to solve this kind of problems we allow to append to the
+    filename an option string.  The option string is separated from
+    the filename by "::" and it is a sequence of assignaments
+    key=value separated by commas.  For example,
+
+
+
+
+
+
+    is a filename that identifies the file
+
+
+
+    Note that the option section is defined as the part of the filename
+    that goes
+    filename
+
+
+
+
+
+
+    is a filename that identifies the file
+    pretty silly filename, I agree...) with option
+
+
+
+    Note that this structure does not allow to have neither "::" nor ","  in an option
+    value.  Currently no escape mechanism is used, maybe later.
+
+
+
+    Finally, notes that the option mechanism applies
+    For example, if we open a data detination with name
+
+
+
+
+
+
+    the output samples will be written to the standard output
+    in floating point format.
+
+
+\end{document}

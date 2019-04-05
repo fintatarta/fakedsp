@@ -1,0 +1,57 @@
+% Document: ./src/fakelib/fakedsp-card.ads
+% Source: ./src/fakelib/fakedsp-card.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./fakedsp-card_adsFakedsp2FFakedsp2Ecard.tex#robo22">Fakedsp.card</a><a class="menuitem" href="./robo_methods.tex#robo_top_of_doc">Methods</a>\subsection{Fakedsp.card/Start}
+\index{unsorted!Start}\index{Methods!Start}
+\textbf{SOURCE:}\hspace{0.08in}\begin{verbatim}
+   procedure Start (Callback        : Callback_Handler_Access;
+                    Input           : Data_Streams.Data_Source_Access;
+                    Output          : Data_Streams.Data_Destination_Access;
+                    In_Buffer_Size  : Positive := 1;
+                    Out_Buffer_Size : Positive := 1)
+     with
+       Pre => Current_State = Sleeping,
+       Post => 
+         Current_State = Running
+         and ADC_DMA_Size = In_Buffer_Size
+         and DAC_DMA_Size = Out_Buffer_Size;
+\end{verbatim}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+   Turn on the "virtual acquisition card."  Data will be Read (\ref{ch:robo6}) from the
+   input source Input and written to Output.  Data can be Read (\ref{ch:robo6})/Write (\ref{ch:robo3})
+   sample by sample or blockwise (simulating a kind of DMA).  The size
+   of an input/output block (in samples) is specified by In\_Buffer\_Size
+   and Out\_Buffer\_Size.
+
+   
+
+   Samples are Read (\ref{ch:robo6}) from the source at the sampling frequency determined
+   by the data source.
+
+\textbf{NOTES:}\hspace{0.08in}
+   So far I tested it only for In\_Buffer\_Size=1 and Out\_Buffer\_Size=1.
+   The more general case most probably works, but it is untested.
+
+
+\end{document}

@@ -1,0 +1,47 @@
+% Document: ./src/fakelib/fakedsp-data_streams.ads
+% Source: ./src/fakelib/fakedsp-data_streams.ads
+% Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+\documentclass{article}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\oddsidemargin 0.25 in 
+\evensidemargin 0.25 in
+\marginparwidth 0.75 in
+\textwidth 5.875 in
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.08in}
+
+\pagestyle{headings}
+\title{FakeDSP API}
+\author{Generated with ROBODoc Version 4.99.43 (Apr  5 2019)
+}
+\makeindex
+\begin{document}
+\maketitle
+\printindex
+\tableofcontents
+\newpage
+
+<a class="menuitem" href="./fakedsp-data_streams_adsFakedsp2FData5FStreams.tex#robo20">Data_Streams</a><a class="menuitem" href="./robo_interfaces.tex#robo_top_of_doc">Abstract Interfaces</a>\subsection{Data\_Streams/Data\_Source}
+\index{unsorted!Data\_Source}\index{Abstract Interfaces!Data\_Source}
+\textbf{SOURCE:}\hspace{0.08in}\begin{verbatim}
+   type Data_Source is limited interface;
+
+   type Data_Source_Access is access all Data_Source'Class;
+\end{verbatim}
+\textbf{DESCRIPTION:}\hspace{0.08in}
+   Abstract interface representing the generic data source.
+   A concrete implementation of this interface needs to define:
+
+\begin{itemize}
+  \item    procedure Read (\ref{ch:robo6}) to get the next sample
+  \item    function Sampling\_Frequency (\ref{ch:robo7}) that returns the
+     sampling frequency of the source
+  \item    function Max\_Channel (\ref{ch:robo2}) returning the number of the
+     last channel
+  \item    procedure Close (\ref{ch:robo4}) that... Close (\ref{ch:robo4}) the source.
+\end{itemize}
+
+
+
+\end{document}
