@@ -15,9 +15,11 @@ As said above, this package includes two libraries: one in C, the other in Ada.
 * If you want to install the **Ada** library, 
   * Use one of the following two possible installation procedures
     1. Copy the content of *Ada/src/fakelib* where your compiler can find it, or, 
-    1. If you use `gprbuild` (distributed with the Adacore suite) then copy the **whole** *Ada/* directory somewhere and `with` the file `fakedsp.gpr` in your project file
+    1. If you use `gprbuild` (distributed with the Adacore suite) then copy the **whole** *Ada/* directory somewhere and `with` the file `fakedsp.gpr` in your project file. **Note:** it is **important** that the relative position of *src/fakelib/* and `fakedsp.gpr` does not change since the project file has a relative reference to the source dir.
   * In both cases you'll use in your code the resources provided by packages `fakedsp`, `fakedsp.card` and `fakedsp.data_streams.files`
-  * See also the documentation in *Ada/doc/html*
+  * See also 
+    * the documentation in *Ada/doc/html*
+    * the examples in *Ada/src/examples*
 
 # How do I use this?
 
