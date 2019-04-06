@@ -153,19 +153,29 @@ package body Fakedsp.Data_Streams.Text is
       end if;
 
 
-      if Hybrid_Files.End_Of_File (Src.File) then
-         --           Put_Line (Standard_Error, "EOF");
-         Src.Empty := True;
-      else
-         Src.Current_Sample := (case Src.Format is
-                                   when Sample_Format =>
-                                     Float (Sample_Type'Value (Hybrid_Files.Get_Line (Src.File))),
+      while not Hybrid_Files.End_Of_File (Src.File) loop
+         declare
+            use Ada.Strings;
+            use Ada.Strings.Fixed;
 
-                                   when Float_Format  =>
-                                     Float'Value (Hybrid_Files.Get_Line (Src.File)));
+            Line : constant String :=  Trim (Hybrid_Files.Get_Line (Src.File), Both);
+         begin
+            if Line /= "" then
+               Src.Current_Sample := (case Src.Format is
+                                         when Sample_Format =>
+                                           Float (Sample_Type'Value (Line)),
 
-         Src.Empty := False;
-      end if;
+                                         when Float_Format  =>
+                                           Float'Value (Line));
+
+               Src.Empty := False;
+               return;
+            end if;
+         end;
+      end loop;
+
+      pragma Assert (Hybrid_Files.End_Of_File (Src.File));
+      Src.Empty := True;
    end Read;
 
    ----------
