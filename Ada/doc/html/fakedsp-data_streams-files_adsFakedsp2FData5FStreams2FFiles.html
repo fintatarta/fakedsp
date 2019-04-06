@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="./robodoc.css" type="text/css" />
+<title>./src/fakelib/fakedsp-data_streams-files.ads</title>
+<!-- Source: ./src/fakelib/fakedsp-data_streams-files.ads -->
+<!-- Generated with ROBODoc Version 4.99.41 (Apr  3 2019) -->
+</head>
+<body>
+<div id="logo">
+<a name="robo_top_of_doc">FakeDSP API</a>
+</div> <!-- logo -->
+<div id="navigation">
+<a class="menuitem" href="./fakedsp_adsFakedsp2FFakedsp.html#robo20">Fakedsp</a><a class="menuitem" href="./robo_packages.html#robo_top_of_doc">Packages</a></div> <!-- navigation -->
+<div id="content">
+<hr />
+<a name="Fakedsp2fData5fStreams2fFiles"></a>
+<a name="robo19"></a><h2>Fakedsp/Data_Streams/Files [ Packages ]</h2>
+
+<p class="item_name">DESCRIPTION</p>
+<p>    The user can use as data stream for sample I/O files with different
+    format.  Every implemented format corresponds to a different implementation
+    of the <a href="./fakedsp-data_streams_adsData5FStreams2FData5FSource.html#robo9">Data_Source</a> or <a href="./fakedsp-data_streams_adsData5FStreams2FData5FDestination.html#robo8">Data_Destination</a> interface defined in the package
+    <a href="./fakedsp-data_streams_adsFakedsp2FData5FStreams.html#robo18">Data_Streams</a>.
+</p>
+
+<p>    In order to make it easier to manage different format at runtime,
+    this package acts as a kind of "broker" that recognizes the format
+    and create the correct object to handle it.
+</p>
+
+<p>    The interface of this package is really simple: it provides two
+    Open functions (<a href="./fakedsp-data_streams-files_adsData5FStreams2EFiles2FOpen2Esource.html#robo7">Open.source</a> and Open.destination) that look
+    at the filename to guess the format if this is not explicitely
+    specified by the user.  If given the special filename the opening
+    functions use the standard input/output.
+</p>
+
+<p><h2>Options in filename</h2>
+</p>
+
+<p>    Sometimes it is necessary to give to the procedure opening the
+    source/destination some information that cannot be found in the
+    file itself.  For example, if the file is just a raw sequence
+    of samples, it is not possible to <a href="./fakedsp-data_streams_adsData5FSource2FRead.html#robo5">Read</a> from it the sampling
+    frequency.  As another example, when we open a data destination
+    that can accept both <a href="./fakedsp_adsFakedsp2FSample5FType.html#robo23">Sample_Type</a> and Float formats, we cannot know
+    which format the user desires.
+</p>
+
+<p>    In order to solve this kind of problems we allow to append to the
+    filename an option string.  The option string is separated from
+    the filename by "::" and it is a sequence of assignaments
+    key=value separated by commas.  For example,
+</p>
+
+<p><center><code>/tmp/impulse.txt::fmt=float,foo,bar=0</code></center>
+</p>
+
+<p>    is a filename that identifies the file
+<code>/tmp/impulse.txt</code> and associates with it three options
+<code>fmt, foo</code> and
+<code>bar</code> with values, respectively,
+<code>float</code>, the empty string and 0.
+</p>
+
+<p>    Note that the option section is defined as the part of the filename
+    that goes
+<b>from the last "::" to the end</b>.  Therefore, the following
+    filename
+</p>
+
+<p><center><code>/tmp/pippo::jimmy=9,::bar=0</code></center>
+</p>
+
+<p>    is a filename that identifies the file
+<code>/tmp/pippo::jimmy=9,</code> (yes, with a comma at the end...
+    pretty silly filename, I agree...) with option
+<code>bar=0</code> and
+<b>not</b> a file
+<code>/tmp/pippo</code> with options
+<code>jimmy=9</code> and
+<code>::bar=0</code>.
+</p>
+
+<p>    Note that this structure does not allow to have neither "::" nor ","  in an option
+    value.  Currently no escape mechanism is used, maybe later.
+</p>
+
+<p>    Finally, notes that the option mechanism applies
+<b>also to the special name "-"</b>.
+    For example, if we open a data detination with name
+</p>
+
+<p><center><code>-::fmt=float</code></center>
+</p>
+
+<p>    the output samples will be written to the standard output
+    in floating point format.
+</p>
+
+</div> <!-- content -->
+<div id="footer">
+<p>Generated from ./src/fakelib/fakedsp-data_streams-files.ads with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.41 on Thu Apr 04 2019 18:05:41
+</p>
+</div> <!-- footer -->
+</body>
+</html>
