@@ -27,7 +27,6 @@ package body Fakedsp.Data_Streams.Text is
    function Open_Source (Filename : String := Standard_IO_Name;
                          Options  : Option_Lists.Option_List := Option_Lists.Empty_List)
                          return Text_Source_Access is
-      pragma Unreferenced (Options);
 
       procedure Parse_Header (Item : Text_Source_Access) is
          use Text_IO;
@@ -108,7 +107,7 @@ package body Fakedsp.Data_Streams.Text is
                                   Frequency      => 8000.0,
                                   Current_Sample => 0.0,
                                   Empty          => False,
-                                  Format         => Sample_Format);
+                                  Format         => Get_Format (Options));
 
    begin
       if Filename = Standard_IO_Name then
